@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import TotalPage from './components/TotalPage'
 
 function App() {
 
     return (
         <>
-            <p className='text-red-500'>hello</p>
+            <TotalPage />
         </>
     )
 }
