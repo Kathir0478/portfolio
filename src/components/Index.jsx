@@ -1,24 +1,17 @@
 import React, { useState } from 'react'
-import Content from './Content'
 import Navbar from './Navbar';
+import Content from './Content';
 
 const Index = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+
+    console.log(isOpen)
     return (
-        <div className='w-screen h-screen'>
+        <div className='w-full h-full'>
             <div className='bg-fixed bg-gradient-to-b from-black to-gray-900'>
                 <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
-                <div className='w-screen bg-fixed bg-gradient-to-b from-black to-gray-900 absolute top-20'>
-                    <div className={`${isOpen ? 'opacity-100' : 'opacity-0'} md:opacity-100 ease-out transition-all duration-1000 `}>
-                        <Content />
-                        <Content />
-                        <Content />
-                        <Content />
-                        <Content />
-                        <Content />
-                        <Content />
-
-                    </div>
+                <div className={`${isOpen ? 'opacity-0 ' : 'opacity-100 '} md:opacity-100 transition-all duration-500`}>
+                    <Content />
                 </div>
             </div>
         </div>

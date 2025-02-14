@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import Index from './components/Index'
+import Index from './components/Index.jsx'
 
 function App() {
 
     return (
-        <>
+        <div>
             <Index />
-        </>
+        </div>
     )
 }
 
