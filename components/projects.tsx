@@ -5,38 +5,65 @@ import { ExternalLink, Github } from "lucide-react"
 
 const projects = [
     {
-        title: "E-Commerce Platform",
+        title: "AI-Powered YouTube Filtering Extension",
         description:
-            "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
-        image: "/modern-ecommerce-interface.png",
-        technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+            "A Chrome extension that filters and recommends YouTube videos based on user-defined prompts and session times. Uses NLP and machine learning to semantically analyze video metadata and ensure recommendation neutrality.",
+        image: "/youtube-filter-extension.png",
+        technologies: ["JavaScript", "NLP", "Machine Learning", "Chrome API"],
         github: "#",
         demo: "#",
     },
     {
-        title: "Task Management App",
+        title: "Website Emotion and Vulnerability Analyzer",
         description:
-            "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-        image: "/task-management-dashboard.png",
-        technologies: ["Vue.js", "Firebase", "Tailwind CSS"],
+            "An NLP-powered tool that analyzes website URLs to detect emotional tone, extract semantic context, and identify potential security risks. Helps users evaluate website trustworthiness before accessing it.",
+        image: "/website-analyzer.png",
+        technologies: ["Python", "NLP", "Heuristic Analysis", "Web Scraping"],
         github: "#",
         demo: "#",
     },
     {
-        title: "Weather Analytics Dashboard",
+        title: "Corpus-Based Enterprise Chatbot Generator",
         description:
-            "A data visualization dashboard that displays weather patterns and analytics using real-time weather API data with interactive charts.",
-        image: "/weather-analytics-dashboard-with-charts.jpg",
-        technologies: ["Python", "Flask", "Chart.js", "OpenWeather API"],
+            "A low-code platform for generating domain-specific chatbots for small businesses. Uses PDF ingestion, LangChain, FAISS vector stores, and OpenAI GPT-3.5-turbo to automate chatbot creation for customer support and internal queries.",
+        image: "/chatbot-generator.png",
+        technologies: ["Python", "LangChain", "OpenAI GPT-3.5", "FAISS"],
         github: "#",
         demo: "#",
     },
     {
-        title: "Mobile Fitness Tracker",
+        title: "Review Classification and AI Summarizer for E-Commerce",
         description:
-            "A React Native mobile app for tracking workouts, setting fitness goals, and monitoring progress with social sharing features.",
-        image: "/mobile-fitness-app-interface.png",
-        technologies: ["React Native", "Expo", "SQLite"],
+            "A sentiment-driven system that filters and summarizes product reviews for e-commerce platforms. Uses Gemini Pro API for concise summaries and NLP pipelines for spam detection, emotion classification, and insight extraction.",
+        image: "/review-summarizer.png",
+        technologies: ["Python", "NLP", "Gemini Pro API", "Machine Learning"],
+        github: "#",
+        demo: "#",
+    },
+    {
+        title: "Home Fitness Tracker and Recommendation Web App",
+        description:
+            "A personalized web app for tracking workouts, setting fitness goals, and monitoring daily activity. Built with full-stack technologies and integrated third-party APIs for dynamic fitness recommendations.",
+        image: "/fitness-tracker.png",
+        technologies: ["React", "Node.js", "Express.js", "MongoDB"],
+        github: "#",
+        demo: "#",
+    },
+    {
+        title: "Entrepreneurial Recommendation Platform",
+        description:
+            "An ML-powered networking platform that matches entrepreneurs by analyzing business profiles, skill sets, and goals. Uses embedding generation, similarity scoring, and NLP semantic analysis for accurate recommendations.",
+        image: "/entrepreneur-platform.png",
+        technologies: ["Python", "Flask", "React", "Machine Learning", "NLP"],
+        github: "#",
+        demo: "#",
+    },
+    {
+        title: "Recruitment Analytics Platform",
+        description:
+            "A data-driven recruitment system that automates candidate evaluation. Includes PDF parsing, text embedding, and Qdrant-based vector similarity search, with REST APIs for scoring candidates against job requirements.",
+        image: "/recruitment-platform.png",
+        technologies: ["Python", "Flask", "MongoDB", "Qdrant", "REST APIs"],
         github: "#",
         demo: "#",
     },

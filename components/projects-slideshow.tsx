@@ -10,77 +10,153 @@ import { motion, AnimatePresence } from "framer-motion"
 const projects = [
     {
         id: 1,
-        title: "E-Commerce Platform",
+        title: "AI-Powered YouTube Filtering Extension",
         description:
-            "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
+            "A Chrome extension that filters and recommends YouTube videos based on user-defined prompts and session times.",
         detailedDescription:
-            "This comprehensive e-commerce platform showcases modern web development practices with a focus on user experience and scalability. Built using React for the frontend with Redux for state management, the application features a responsive design that works seamlessly across all devices. The backend is powered by Node.js and Express, with MongoDB as the database solution. Key features include secure user authentication with JWT tokens, integrated Stripe payment processing, real-time inventory management, order tracking, and a comprehensive admin dashboard for managing products, orders, and users. The platform also includes advanced search functionality, product filtering, user reviews and ratings, and email notifications for order updates.",
-        image: "/modern-ecommerce-interface-with-shopping-cart.jpg",
-        technologies: ["React", "Node.js", "MongoDB", "Stripe", "Redux", "Express", "JWT"],
-        github: "#",
-        demo: "#",
+            "This Chrome extension leverages NLP and machine learning to semantically analyze video metadata including titles, descriptions, captions, and comments. Users can define prompts and time-based sessions to filter or highlight videos while ensuring the recommendation system remains neutral. Real-time API handling, dynamic DOM injection, and session tracking enable seamless user experience. The extension ensures that unwanted content is temporarily blocked without affecting YouTube’s native algorithm.",
+        image: "/youtube-filtering.jpg",
+        technologies: ["JavaScript", "NLP", "Machine Learning", "Chrome Extension", "Langchain"],
+        github: "https://github.com/Kathir0478/extension",
         features: [
-            "User Authentication",
-            "Payment Processing",
-            "Admin Dashboard",
-            "Real-time Updates",
-            "Responsive Design",
+            "User-defined video filtering",
+            "Session-based recommendations",
+            "NLP-based semantic analysis",
+            "Dynamic UI injection",
+            "Neutral recommendation enforcement",
+            "Gamified and self focussing Sessions"
         ],
-        challenges: "Implementing secure payment processing and managing complex state across multiple components",
-        outcome: "Successfully deployed platform handling 1000+ daily transactions",
+        challenges: "Ensuring real-time DOM updates and filtering without disrupting YouTube's native recommendation system",
+        outcome: "Improved user control over video consumption and enhanced personalized experience",
     },
     {
         id: 2,
-        title: "Task Management App",
+        title: "Website Emotion and Vulnerability Analyzer",
         description:
-            "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+            "An NLP-powered tool that analyzes websites to detect emotional tone, semantic context, and potential security risks.",
         detailedDescription:
-            "This collaborative task management application revolutionizes team productivity with its intuitive interface and powerful features. Built with Vue.js and Firebase, the app provides real-time synchronization across all team members, ensuring everyone stays updated on project progress. The drag-and-drop functionality, powered by Vue Draggable, allows users to easily organize tasks across different project boards. Firebase Firestore handles real-time data synchronization, while Firebase Authentication manages user access and permissions. The application features customizable project boards, task prioritization, deadline tracking, file attachments, comment threads, and detailed progress analytics. Team members can assign tasks, set due dates, add labels and categories, and receive notifications for important updates.",
-        image: "/task-management-kanban.png",
-        technologies: ["Vue.js", "Firebase", "Tailwind CSS", "Vue Draggable", "Chart.js"],
-        github: "#",
-        demo: "#",
-        features: ["Real-time Collaboration", "Drag & Drop", "Team Management", "Progress Tracking", "File Attachments"],
-        challenges: "Implementing real-time synchronization and complex drag-and-drop interactions",
-        outcome: "Improved team productivity by 40% in beta testing with 5 teams",
-    },
-    {
-        id: 3,
-        title: "Weather Analytics Dashboard",
-        description:
-            "A data visualization dashboard that displays weather patterns and analytics using real-time weather API data with interactive charts.",
-        detailedDescription:
-            "This sophisticated weather analytics dashboard transforms raw meteorological data into actionable insights through beautiful visualizations and comprehensive analysis. Built with Python Flask for the backend and Chart.js for interactive visualizations, the application integrates with multiple weather APIs including OpenWeatherMap and WeatherAPI to provide comprehensive weather data. The dashboard features historical weather analysis, predictive modeling using machine learning algorithms, customizable location tracking, severe weather alerts, and detailed climate trend analysis. Users can compare weather patterns across different locations, export data for further analysis, and set up automated reports. The application also includes air quality monitoring, UV index tracking, and agricultural weather insights for farming applications.",
-        image: "/weather-analytics-dashboard-with-charts-and-graphs.jpg",
-        technologies: ["Python", "Flask", "Chart.js", "OpenWeather API", "Pandas", "NumPy", "SQLite"],
+            "This tool processes website URLs to evaluate content for emotional tone, semantic meaning, and potential vulnerabilities. It acts as a pre-access evaluator to help users assess website trustworthiness. Using NLP pipelines and heuristic-based engines, the system predicts emotions, detects risks, and provides actionable insights. The solution enhances online safety and user awareness before interacting with unfamiliar sites.",
+        image: "/website-analyzer.png",
+        technologies: ["Python", "NLP", "Heuristic Analysis", "Web Scraping"],
         github: "#",
         demo: "#",
         features: [
-            "Real-time Data",
-            "Interactive Charts",
-            "Historical Analysis",
-            "Weather Alerts",
-            "Multi-location Tracking",
+            "Emotion analysis",
+            "Semantic context extraction",
+            "Vulnerability detection",
+            "Trustworthiness scoring",
+            "Pre-access evaluation",
         ],
-        challenges: "Processing large datasets efficiently and creating responsive data visualizations",
-        outcome: "Deployed for 3 agricultural companies to optimize farming schedules",
+        challenges: "Designing accurate heuristics and NLP pipelines to analyze diverse web content reliably",
+        outcome: "Enabled safer browsing and informed decision-making for users",
+    },
+    {
+        id: 3,
+        title: "Corpus-Based Enterprise Chatbot Generator",
+        description:
+            "A low-code platform that generates domain-specific chatbots for small businesses using AI and NLP.",
+        detailedDescription:
+            "This platform simplifies chatbot creation for small businesses by ingesting PDFs and building knowledge bases. It leverages LangChain, FAISS vector stores, and OpenAI GPT-3.5-turbo for generating responsive chatbots capable of handling customer support and internal queries. Users can create chatbots without coding knowledge, reducing setup time and improving efficiency. The system supports dynamic knowledge updates and domain-specific customization.",
+        image: "/chatbot-generator.png",
+        technologies: ["Python", "LangChain", "OpenAI GPT-3.5", "FAISS", "NLP"],
+        github: "#",
+        demo: "#",
+        features: [
+            "PDF ingestion",
+            "Knowledge base creation",
+            "Domain-specific chatbot generation",
+            "Low-code interface",
+            "Automatic updates",
+        ],
+        challenges: "Ensuring accurate response generation and managing knowledge base embeddings efficiently",
+        outcome: "Reduced setup complexity for non-technical users and improved internal support workflows",
     },
     {
         id: 4,
-        title: "Mobile Fitness Tracker",
+        title: "Review Classification and AI Summarizer for E-Commerce",
         description:
-            "A React Native mobile app for tracking workouts, setting fitness goals, and monitoring progress with social sharing features.",
+            "A sentiment-driven system to filter, classify, and summarize product reviews for e-commerce platforms.",
         detailedDescription:
-            "This comprehensive fitness tracking application empowers users to achieve their health and wellness goals through detailed workout tracking, progress monitoring, and social engagement features. Built with React Native and Expo for cross-platform compatibility, the app utilizes SQLite for local data storage and synchronization. The application features customizable workout routines, exercise libraries with instructional videos, progress photos, body measurements tracking, and integration with wearable devices. Users can set SMART fitness goals, track nutrition intake, monitor sleep patterns, and share achievements with friends. The app includes workout timers, rest period notifications, exercise form tips, and detailed analytics showing progress over time. Social features allow users to join challenges, share workouts, and motivate each other through a built-in community platform.",
-        image: "/mobile-fitness-app-interface-with-workout-tracking.jpg",
-        technologies: ["React Native", "Expo", "SQLite", "Redux", "React Navigation", "Async Storage"],
+            "This project processes user reviews using NLP pipelines to detect spam, classify emotion and polarity, and generate concise summaries. The integration of Gemini Pro API allows for accurate summarization of product feedback. The system enhances review browsing efficiency, helping customers and businesses quickly grasp insights from large volumes of reviews. The solution also provides analytics for product improvement and sentiment tracking.",
+        image: "/review-summarizer.png",
+        technologies: ["Python", "NLP", "Gemini Pro API", "Machine Learning"],
         github: "#",
         demo: "#",
-        features: ["Workout Tracking", "Goal Setting", "Progress Analytics", "Social Sharing", "Wearable Integration"],
-        challenges: "Optimizing performance for real-time workout tracking and managing offline data sync",
-        outcome: "Published on App Store with 4.8/5 rating and 10,000+ downloads",
+        features: [
+            "Sentiment analysis",
+            "Spam detection",
+            "Review summarization",
+            "Emotion & polarity classification",
+            "Insight extraction",
+        ],
+        challenges: "Processing large volumes of reviews and generating accurate, concise summaries",
+        outcome: "Enhanced review readability and provided actionable insights for businesses",
     },
-]
+    {
+        id: 5,
+        title: "Home Fitness Tracker and Recommendation Web App",
+        description:
+            "A personalized web app to track workouts, monitor progress, and receive fitness recommendations.",
+        detailedDescription:
+            "This full-stack platform allows users to log workouts, set goals, and monitor daily activity. Built with React, Node.js, Express, and MongoDB, it integrates third-party APIs for exercise datasets and instructional videos. Users receive personalized fitness plans based on performance analytics. Features include authentication, progress tracking, performance analytics, and adaptive recommendations.",
+        image: "/fitness-tracker.png",
+        technologies: ["React", "Node.js", "Express.js", "MongoDB", "APIs"],
+        github: "#",
+        demo: "#",
+        features: [
+            "Workout logging",
+            "Personalized recommendations",
+            "Progress tracking",
+            "Performance analytics",
+            "Integration with exercise APIs",
+        ],
+        challenges: "Designing adaptive recommendation algorithms and integrating multiple APIs",
+        outcome: "Enabled users to achieve fitness goals with personalized guidance",
+    },
+    {
+        id: 6,
+        title: "Entrepreneurial Recommendation Platform",
+        description:
+            "An ML-powered platform that matches entrepreneurs based on profiles, skills, and goals.",
+        detailedDescription:
+            "This platform uses embedding generation, similarity scoring, and NLP semantic analysis to recommend collaborations between entrepreneurs. The system includes a full-stack React + Node.js interface with Flask APIs for ML inference. Users receive personalized recommendations for networking and business partnerships based on skill sets and goals.",
+        image: "/entrepreneur-platform.png",
+        technologies: ["Python", "Flask", "React", "Machine Learning", "NLP"],
+        github: "#",
+        demo: "#",
+        features: [
+            "Profile embedding generation",
+            "Semantic similarity scoring",
+            "Collaboration recommendations",
+            "Full-stack interface",
+            "Real-time ML inference",
+        ],
+        challenges: "Balancing accuracy of recommendations with scalability and real-time performance",
+        outcome: "Improved networking efficiency and meaningful business collaborations",
+    },
+    {
+        id: 7,
+        title: "Recruitment Analytics Platform",
+        description:
+            "A data-driven recruitment system automating candidate evaluation using AI and vector search.",
+        detailedDescription:
+            "This system parses candidate resumes, generates embeddings, and uses Qdrant-based vector similarity search to score candidates against job requirements. Built with Python, Flask, and MongoDB, the platform exposes REST APIs for automated candidate evaluation and shortlisting. It enhances fairness, scalability, and efficiency in recruitment processes.",
+        image: "/recruitment-platform.png",
+        technologies: ["Python", "Flask", "MongoDB", "Qdrant", "REST APIs"],
+        github: "#",
+        demo: "#",
+        features: [
+            "Resume parsing",
+            "Vector similarity scoring",
+            "Automated candidate evaluation",
+            "REST API endpoints",
+            "Scalable deployment",
+        ],
+        challenges: "Ensuring accurate matching and efficient vector search across large candidate datasets",
+        outcome: "Streamlined recruitment process and improved shortlisting efficiency",
+    },
+];
+
 
 export function ProjectsSlideshow() {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -194,13 +270,6 @@ export function ProjectsSlideshow() {
                                                             <Github className="h-4 w-4 mr-2 group-hover/btn:rotate-12 transition-transform" />
                                                             Code
                                                         </Button>
-                                                        <Button
-                                                            size="sm"
-                                                            className="group/btn bg-primary text-primary-foreground hover:bg-primary/90"
-                                                        >
-                                                            <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:translate-x-1 transition-transform" />
-                                                            Demo
-                                                        </Button>
                                                     </div>
                                                 </motion.div>
                                             </CardContent>
@@ -259,26 +328,6 @@ export function ProjectsSlideshow() {
                         ))}
                     </div>
 
-                    {/* Project Grid for Quick Access */}
-                    {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {projects.map((project, index) => (
-                            <Card
-                                key={project.id}
-                                className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${index === currentIndex ? "ring-2 ring-primary" : ""
-                                    }`}
-                                onClick={() => goToSlide(index)}
-                            >
-                                <CardContent className="p-4">
-                                    <img
-                                        src={project.image || "/placeholder.svg"}
-                                        alt={project.title}
-                                        className="w-full h-24 object-cover rounded-lg mb-3"
-                                    />
-                                    <h4 className="font-semibold text-sm text-balance">{project.title}</h4>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div> */}
                 </div>
             </div>
 
@@ -355,12 +404,6 @@ export function ProjectsSlideshow() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                                                    <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer">
-                                                        <ExternalLink className="h-4 w-4 mr-2" />
-                                                        View Live Demo
-                                                    </a>
-                                                </Button>
                                                 <Button
                                                     variant="outline"
                                                     className="w-full bg-background text-foreground border-border hover:bg-muted"

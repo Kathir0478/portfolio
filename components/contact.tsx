@@ -88,8 +88,8 @@ export function Contact() {
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-muted-foreground">
-                                        Currently seeking internship opportunities for Summer 2024 and open to freelance projects during the
-                                        academic year.
+                                        Motivated and enthusiastic fresher seeking full-time opportunities to apply my skills in AI,
+                                        Data Science, and software development while contributing to innovative and impactful projects.
                                     </p>
                                 </CardContent>
                             </Card>

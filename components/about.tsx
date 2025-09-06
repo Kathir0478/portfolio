@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion"
 import { Code, Users, Award, Coffee } from "lucide-react"
+import Lottie from "lottie-react"
+import AboutAnimation from "@/public/animations/About-Avatar.json"
 
 export function About() {
     return (
@@ -29,14 +31,16 @@ export function About() {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                             viewport={{ once: true }}
-                            className="relative"
+                            className="relative flex justify-center"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 rounded-2xl blur-xl" />
-                            <img
-                                src="/student-working-on-laptop-in-modern-workspace.jpg"
-                                alt="About Kathiravan"
-                                className="relative rounded-2xl shadow-2xl w-full hover:scale-105 transition-transform duration-500"
-                            />
+                            <div className="w-full max-w-md">
+                                <Lottie
+                                    animationData={AboutAnimation}
+                                    loop
+                                    className="w-full h-auto"
+                                />
+                            </div>
+
                         </motion.div>
 
                         <motion.div
@@ -47,14 +51,17 @@ export function About() {
                             className="space-y-6"
                         >
                             <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
-                                I'm a dedicated Computer Science student with a passion for problem-solving and creating meaningful
+                                I'm a dedicated student with a passion for problem-solving and creating meaningful
                                 digital experiences. My journey in technology began in high school, and I've been fascinated by the
                                 endless possibilities of code ever since.
                             </p>
 
                             <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
-                                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects,
-                                or mentoring fellow students. I believe in the power of collaboration and continuous learning.
+                                Beyond technical expertise, I’m a dedicated problem-solver with strong teamwork, leadership, and critical thinking abilities.
+                                I actively participate in hackathons, coding competitions, and personal projects to continuously push my boundaries.
+                            </p>
+                            <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
+                                Outside of coding, I maintain creativity and focus through badminton, travel, and exploring cutting-edge AI research, turning ideas from paper into practical solutions.
                             </p>
 
                             <div className="grid grid-cols-2 gap-4 pt-6">
@@ -63,7 +70,7 @@ export function About() {
                                     className="text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
                                 >
                                     <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                                        15+
+                                        10+
                                     </div>
                                     <div className="text-sm text-muted-foreground font-medium">Projects Completed</div>
                                 </motion.div>
@@ -72,9 +79,9 @@ export function About() {
                                     className="text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
                                 >
                                     <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                                        8.65
+                                        7+
                                     </div>
-                                    <div className="text-sm text-muted-foreground font-medium">GPA</div>
+                                    <div className="text-sm text-muted-foreground font-medium">Hackathons</div>
                                 </motion.div>
                             </div>
                         </motion.div>
