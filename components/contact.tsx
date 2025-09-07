@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import emailjs from "emailjs-com"
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,22 +9,54 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
 
 export function Contact() {
+    const { toast } = useToast()
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         subject: "",
         message: "",
     })
+    const [isSending, setIsSending] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        // Handle form submission here
-        window.location.href = `mailto:yourname@email.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-            `Hi, I'm ${formData.name} (${formData.email}).\n\n${formData.message}`
-        )}`
-        console.log("Form submitted:", formData)
+        setIsSending(true)
+        setIsSuccess(false)
+
+        try {
+            const result = await emailjs.send(
+                "service_09a1mur",
+                "template_3j31avt",
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                },
+                "yGcfX1PbfjqRMJdPW"
+            )
+            console.log("SUCCESS!", result.text)
+            setIsSuccess(true)
+            setFormData({ name: "", email: "", subject: "", message: "" })
+            toast({
+                title: "Message Sent",
+                description: "Thanks! I'll get back to you shortly."
+            })// reset form
+        } catch (error) {
+            console.error("FAILED...", error)
+            toast({
+                variant: "destructive",
+                title: "❌ Message Failed",
+                description: "Something went wrong. Please try again.",
+            })
+            // alert("Message failed to send. Please try again.")
+        } finally {
+            setIsSending(false)
+        }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -158,4 +158,24 @@
     }
 }
 
-@layer components {}
+/* @layer components {
+    .bg-animated-gradient {
+        background: linear-gradient(-45deg, #1e3a8a, #9333ea, #2563eb, #7c3aed);
+        background-size: 400% 400%;
+        animation: gradientMove 15s ease infinite;
+    }
+
+    @keyframes gradientMove {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+} */

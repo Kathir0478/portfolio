@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LottieBackground } from "@/components/lottie-background"
 import { Suspense } from "react"
 import "./globals.css"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
     title: "Student Portfolio - Showcase Your Journey",
@@ -26,6 +27,7 @@ export default function RootLayout({
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                         <LottieBackground />
                         {children}
+                        <Toaster />
                     </ThemeProvider>
                 </Suspense>
                 <Analytics />

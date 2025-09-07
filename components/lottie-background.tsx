@@ -78,7 +78,7 @@ export function LottieBackground() {
         const loadAnimations = async () => {
             try {
                 // const [darkRes, lightRes] = await Promise.all([
-                //     fetch("/animations/BG-Dark.json").then(r => r.json()),
+                //     fetch("/animations/BG-Light.json").then(r => r.json()),
                 //     fetch("/animations/BG-Light.json").then(r => r.json()),
                 // ])
                 // setAnimations({ dark: darkRes, light: lightRes })
@@ -92,7 +92,7 @@ export function LottieBackground() {
     useEffect(() => {
         if (!animations) return
         // setAnimationData(resolvedTheme === "dark" ? animations.dark : animations.light)
-        setAnimationData(resolvedTheme === "dark" ? DarkAnim : LightAnim)
+        setAnimationData(resolvedTheme === "dark" ? LightAnim : LightAnim)
     }, [resolvedTheme, animations])
 
     if (!animationData) return null

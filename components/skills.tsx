@@ -4,51 +4,65 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { Search, Filter, Star, Code, Database, Globe, Wrench, Brain, Users } from "lucide-react"
+import { Puzzle, MessageSquare, ClipboardList, RefreshCw, Crown, Search, Filter, Star, Code, Database, Globe, Wrench, Brain, Users } from "lucide-react"
+// import {} from "lucide-react"
 
 const skillCategories = [
+    {
+        title: "Core CS Fundamentals",
+        icon: Code,
+        skills: [
+            {
+                name: "Data Structures & Algorithms",
+                level: 85,
+                category: "Core CS Fundamentals"
+            },
+            {
+                name: "Object Oriented Programming",
+                level: 85,
+                category: "Core CS Fundamentals"
+            },
+            {
+                name: "Operating Systems",
+                level: 70,
+                category: "Core CS Fundamentals"
+            },
+            {
+                name: "Databse Manipulation",
+                level: 85,
+                category: "Core CS Fundamentals"
+            },
+            {
+                name: "Computer Networking",
+                level: 60,
+                category: "Core CS Fundamentals"
+            }
+        ],
+    },
     {
         title: "Programming Languages",
         icon: Code,
         skills: [
             {
                 name: "JavaScript",
-                level: 90,
-                category: "Programming Languages",
-                description: "Modern ES6+, async/await, DOM manipulation",
+                level: 80,
+                category: "Programming Languages"
             },
             {
                 name: "Python",
-                level: 85,
-                category: "Programming Languages",
-                description: "Data analysis, web scraping, automation",
+                level: 90,
+                category: "Programming Languages"
             },
             {
                 name: "Java",
-                level: 80,
-                category: "Programming Languages",
-                description: "OOP, Spring Boot, enterprise applications",
+                level: 90,
+                category: "Programming Languages"
             },
             {
                 name: "TypeScript",
-                level: 75,
-                category: "Programming Languages",
-                description: "Type-safe JavaScript, interfaces, generics",
-            },
-            {
-                name: "C++",
                 level: 70,
-                category: "Programming Languages",
-                description: "System programming, algorithms, data structures",
-            },
-            {
-                name: "Go",
-                level: 65,
-                category: "Programming Languages",
-                description: "Concurrent programming, microservices",
-            },
-            { name: "Rust", level: 60, category: "Programming Languages", description: "Memory safety, systems programming" },
-            { name: "PHP", level: 70, category: "Programming Languages", description: "Web development, Laravel framework" },
+                category: "Programming Languages"
+            }
         ],
     },
     {
@@ -57,70 +71,61 @@ const skillCategories = [
         skills: [
             {
                 name: "React",
-                level: 90,
-                category: "Web Technologies",
-                description: "Hooks, Context API, component architecture",
-            },
-            { name: "Node.js", level: 85, category: "Web Technologies", description: "Express.js, RESTful APIs, middleware" },
-            {
-                name: "HTML/CSS",
-                level: 95,
-                category: "Web Technologies",
-                description: "Semantic HTML, CSS Grid, Flexbox, animations",
-            },
-            { name: "Next.js", level: 80, category: "Web Technologies", description: "SSR, SSG, API routes, App Router" },
-            {
-                name: "Vue.js",
                 level: 75,
-                category: "Web Technologies",
-                description: "Composition API, Vuex, component lifecycle",
+                category: "Web Technologies"
             },
             {
-                name: "Angular",
+                name: "Next.js",
                 level: 70,
-                category: "Web Technologies",
-                description: "TypeScript, RxJS, dependency injection",
-            },
-            { name: "Svelte", level: 65, category: "Web Technologies", description: "Reactive programming, SvelteKit" },
-            {
-                name: "Tailwind CSS",
-                level: 90,
-                category: "Web Technologies",
-                description: "Utility-first CSS, responsive design",
+                category: "Web Technologies"
             },
             {
-                name: "SASS/SCSS",
+                name: "Node.js",
+                level: 85,
+                category: "Web Technologies",
+                description: "Express.js, RESTful APIs, middleware",
+            },
+            {
+                name: "Express",
                 level: 80,
                 category: "Web Technologies",
-                description: "CSS preprocessing, mixins, variables",
+                description: "API development, middleware, routing",
             },
-            { name: "GraphQL", level: 70, category: "Web Technologies", description: "Query language, Apollo Client/Server" },
+            {
+                name: "HTML/CSS",
+                level: 80,
+                category: "Web Technologies"
+            },
+            {
+                name: "Tailwind CSS",
+                level: 80,
+                category: "Web Technologies"
+            },
+            {
+                name: "Framer Motion",
+                level: 80,
+                category: "Web Technologies"
+            },
         ],
     },
     {
         title: "Databases",
         icon: Database,
         skills: [
-            { name: "MongoDB", level: 80, category: "Databases", description: "NoSQL, aggregation pipelines, indexing" },
             {
-                name: "PostgreSQL",
-                level: 75,
-                category: "Databases",
-                description: "Relational database, complex queries, optimization",
-            },
-            { name: "MySQL", level: 75, category: "Databases", description: "Database design, stored procedures, triggers" },
-            { name: "Redis", level: 70, category: "Databases", description: "Caching, session storage, pub/sub" },
-            {
-                name: "Firebase",
+                name: "MongoDB",
                 level: 80,
-                category: "Databases",
-                description: "Real-time database, authentication, hosting",
+                category: "Databases"
             },
             {
-                name: "Supabase",
+                name: "MySQL",
                 level: 75,
-                category: "Databases",
-                description: "PostgreSQL backend, real-time subscriptions",
+                category: "Databases"
+            },
+            {
+                name: "SQL",
+                level: 80,
+                category: "Databases"
             },
         ],
     },
@@ -129,38 +134,24 @@ const skillCategories = [
         icon: Wrench,
         skills: [
             {
-                name: "Git",
+                name: "Git & GitHub",
                 level: 90,
-                category: "Tools & DevOps",
-                description: "Version control, branching strategies, collaboration",
+                category: "Tools & DevOps"
+            },
+            {
+                name: "Vercel",
+                level: 75,
+                category: "Tools & DevOps"
+            },
+            {
+                name: "Render",
+                level: 85,
+                category: "Tools & DevOps"
             },
             {
                 name: "Docker",
-                level: 70,
-                category: "Tools & DevOps",
-                description: "Containerization, Docker Compose, multi-stage builds",
-            },
-            { name: "AWS", level: 65, category: "Tools & DevOps", description: "EC2, S3, Lambda, CloudFormation" },
-            {
-                name: "Vercel",
-                level: 85,
-                category: "Tools & DevOps",
-                description: "Deployment, serverless functions, edge computing",
-            },
-            {
-                name: "GitHub Actions",
                 level: 75,
-                category: "Tools & DevOps",
-                description: "CI/CD pipelines, automated testing, deployment",
-            },
-            { name: "Webpack", level: 70, category: "Tools & DevOps", description: "Module bundling, optimization, plugins" },
-            { name: "Vite", level: 80, category: "Tools & DevOps", description: "Fast build tool, HMR, modern bundling" },
-            { name: "Jest", level: 75, category: "Tools & DevOps", description: "Unit testing, mocking, test coverage" },
-            {
-                name: "Cypress",
-                level: 70,
-                category: "Tools & DevOps",
-                description: "End-to-end testing, integration testing",
+                category: "Tools & DevOps"
             },
         ],
     },
@@ -170,48 +161,46 @@ const skillCategories = [
         skills: [
             {
                 name: "TensorFlow",
-                level: 60,
-                category: "AI & Machine Learning",
-                description: "Neural networks, deep learning models",
-            },
-            { name: "PyTorch", level: 55, category: "AI & Machine Learning", description: "Research-focused ML framework" },
-            {
-                name: "Scikit-learn",
                 level: 70,
-                category: "AI & Machine Learning",
-                description: "Classical ML algorithms, data preprocessing",
+                category: "AI & Machine Learning"
             },
             {
-                name: "Pandas",
-                level: 80,
-                category: "AI & Machine Learning",
-                description: "Data manipulation, analysis, cleaning",
-            },
-            {
-                name: "NumPy",
+                name: "PyTorch",
                 level: 75,
-                category: "AI & Machine Learning",
-                description: "Numerical computing, array operations",
+                category: "AI & Machine Learning"
+            },
+            {
+                name: "LangChain",
+                level: 85,
+                category: "AI & Machine Learning"
+            },
+            {
+                name: "Gemini API",
+                level: 80,
+                category: "AI & Machine Learning"
             },
             {
                 name: "OpenAI API",
-                level: 75,
-                category: "AI & Machine Learning",
-                description: "GPT integration, prompt engineering",
+                level: 85,
+                category: "AI & Machine Learning"
+            },
+            {
+                name: "LLMs",
+                level: 80,
+                category: "AI & Machine Learning"
             },
         ],
     },
 ]
 
 const softSkills = [
-    { name: "Problem Solving", icon: "🧩", description: "Breaking down complex problems into manageable solutions" },
-    { name: "Team Collaboration", icon: "🤝", description: "Working effectively in diverse, cross-functional teams" },
-    { name: "Communication", icon: "💬", description: "Clear technical communication with stakeholders" },
-    { name: "Project Management", icon: "📋", description: "Agile methodologies, sprint planning, task prioritization" },
-    { name: "Critical Thinking", icon: "🤔", description: "Analytical approach to decision-making and problem-solving" },
-    { name: "Adaptability", icon: "🔄", description: "Quick learning and adaptation to new technologies" },
-    { name: "Leadership", icon: "👑", description: "Mentoring junior developers, leading technical initiatives" },
-    { name: "Time Management", icon: "⏰", description: "Efficient task prioritization and deadline management" },
+    { name: "Problem Solving", icon: <Puzzle className="text-blue-500" />, description: "Breaking down complex problems into manageable solutions" },
+    { name: "Team Collaboration", icon: <Users className="text-blue-600" />, description: "Working effectively in diverse, cross-functional teams" },
+    { name: "Communication", icon: <MessageSquare className="text-indigo-600" />, description: "Clear technical communication with stakeholders" },
+    { name: "Project Management", icon: <ClipboardList className="text-indigo-700" />, description: "Agile methodologies, sprint planning, task prioritization" },
+    { name: "Critical Thinking", icon: <Brain className="text-violet-700" />, description: "Analytical approach to decision-making and problem-solving" },
+    { name: "Adaptability", icon: <RefreshCw className="text-violet-600" />, description: "Quick learning and adaptation to new technologies" },
+    { name: "Leadership", icon: <Crown className="text-purple-600" />, description: "Mentoring junior developers, leading technical initiatives" }
 ]
 
 const allTechnicalSkills = skillCategories.flatMap((category) => category.skills)

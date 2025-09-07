@@ -16,7 +16,7 @@ const projects = [
         detailedDescription:
             "This Chrome extension leverages NLP and machine learning to semantically analyze video metadata including titles, descriptions, captions, and comments. Users can define prompts and time-based sessions to filter or highlight videos while ensuring the recommendation system remains neutral. Real-time API handling, dynamic DOM injection, and session tracking enable seamless user experience. The extension ensures that unwanted content is temporarily blocked without affecting YouTube’s native algorithm.",
         image: "/youtube-filtering.jpg",
-        technologies: ["JavaScript", "NLP", "Machine Learning", "Chrome Extension", "Langchain"],
+        technologies: ["JavaScript", "Tailwind CSS", "NLP", "Machine Learning", "Chrome Extension", "Langchain"],
         github: "https://github.com/Kathir0478/extension",
         features: [
             "User-defined video filtering",
@@ -36,10 +36,9 @@ const projects = [
             "An NLP-powered tool that analyzes websites to detect emotional tone, semantic context, and potential security risks.",
         detailedDescription:
             "This tool processes website URLs to evaluate content for emotional tone, semantic meaning, and potential vulnerabilities. It acts as a pre-access evaluator to help users assess website trustworthiness. Using NLP pipelines and heuristic-based engines, the system predicts emotions, detects risks, and provides actionable insights. The solution enhances online safety and user awareness before interacting with unfamiliar sites.",
-        image: "/website-analyzer.png",
+        image: "/web-analyzer.png",
         technologies: ["Python", "NLP", "Heuristic Analysis", "Web Scraping"],
         github: "#",
-        demo: "#",
         features: [
             "Emotion analysis",
             "Semantic context extraction",
@@ -57,10 +56,9 @@ const projects = [
             "A low-code platform that generates domain-specific chatbots for small businesses using AI and NLP.",
         detailedDescription:
             "This platform simplifies chatbot creation for small businesses by ingesting PDFs and building knowledge bases. It leverages LangChain, FAISS vector stores, and OpenAI GPT-3.5-turbo for generating responsive chatbots capable of handling customer support and internal queries. Users can create chatbots without coding knowledge, reducing setup time and improving efficiency. The system supports dynamic knowledge updates and domain-specific customization.",
-        image: "/chatbot-generator.png",
-        technologies: ["Python", "LangChain", "OpenAI GPT-3.5", "FAISS", "NLP"],
-        github: "#",
-        demo: "#",
+        image: "/corpus-chatbot.jpg",
+        technologies: ["Python", "LangChain", "OpenAI GPT-3.5", "FAISS", "NLP", "Fast API", "Node Js", "React", "Tailwind CSS", "Mongo DB", "Express JS"],
+        github: "https://github.com/Kathir0478/corpus-chatbot",
         features: [
             "PDF ingestion",
             "Knowledge base creation",
@@ -78,10 +76,9 @@ const projects = [
             "A sentiment-driven system to filter, classify, and summarize product reviews for e-commerce platforms.",
         detailedDescription:
             "This project processes user reviews using NLP pipelines to detect spam, classify emotion and polarity, and generate concise summaries. The integration of Gemini Pro API allows for accurate summarization of product feedback. The system enhances review browsing efficiency, helping customers and businesses quickly grasp insights from large volumes of reviews. The solution also provides analytics for product improvement and sentiment tracking.",
-        image: "/review-summarizer.png",
+        image: "/ecom-commenter.jpg",
         technologies: ["Python", "NLP", "Gemini Pro API", "Machine Learning"],
-        github: "#",
-        demo: "#",
+        github: "https://github.com/Kathir0478/walmart",
         features: [
             "Sentiment analysis",
             "Spam detection",
@@ -99,10 +96,9 @@ const projects = [
             "A personalized web app to track workouts, monitor progress, and receive fitness recommendations.",
         detailedDescription:
             "This full-stack platform allows users to log workouts, set goals, and monitor daily activity. Built with React, Node.js, Express, and MongoDB, it integrates third-party APIs for exercise datasets and instructional videos. Users receive personalized fitness plans based on performance analytics. Features include authentication, progress tracking, performance analytics, and adaptive recommendations.",
-        image: "/fitness-tracker.png",
-        technologies: ["React", "Node.js", "Express.js", "MongoDB", "APIs"],
-        github: "#",
-        demo: "#",
+        image: "/home-fitness.jpg",
+        technologies: ["React", "Node.js", "Express.js", "MongoDB", "APIs", "Langchain", "FAISS", "Gemini API", "Tailwind CSS", "Framer Motion"],
+        github: "https://github.com/Kathir0478/homefitness",
         features: [
             "Workout logging",
             "Personalized recommendations",
@@ -120,10 +116,9 @@ const projects = [
             "An ML-powered platform that matches entrepreneurs based on profiles, skills, and goals.",
         detailedDescription:
             "This platform uses embedding generation, similarity scoring, and NLP semantic analysis to recommend collaborations between entrepreneurs. The system includes a full-stack React + Node.js interface with Flask APIs for ML inference. Users receive personalized recommendations for networking and business partnerships based on skill sets and goals.",
-        image: "/entrepreneur-platform.png",
-        technologies: ["Python", "Flask", "React", "Machine Learning", "NLP"],
-        github: "#",
-        demo: "#",
+        image: "/entrepeur-site.jpg",
+        technologies: ["Python", "Flask", "Machine Learning", "Node Js", "React", "Tailwind CSS", "Mongo DB", "Express JS"],
+        github: "https://github.com/Kathir0478/smart-networking-engine",
         features: [
             "Profile embedding generation",
             "Semantic similarity scoring",
@@ -141,10 +136,9 @@ const projects = [
             "A data-driven recruitment system automating candidate evaluation using AI and vector search.",
         detailedDescription:
             "This system parses candidate resumes, generates embeddings, and uses Qdrant-based vector similarity search to score candidates against job requirements. Built with Python, Flask, and MongoDB, the platform exposes REST APIs for automated candidate evaluation and shortlisting. It enhances fairness, scalability, and efficiency in recruitment processes.",
-        image: "/recruitment-platform.png",
-        technologies: ["Python", "Flask", "MongoDB", "Qdrant", "REST APIs"],
-        github: "#",
-        demo: "#",
+        image: "/hiracle.jpg",
+        technologies: ["Python", "Flask", "Qdrant", "REST APIs", "Node Js", "React", "Tailwind CSS", "Mongo DB", "Express JS"],
+        github: "https://github.com/Kathir0478/hiracle",
         features: [
             "Resume parsing",
             "Vector similarity scoring",
@@ -285,9 +279,9 @@ export function ProjectsSlideshow() {
                                 variant="secondary"
                                 size="icon"
                                 onClick={prevSlide}
-                                className="bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
                             >
-                                <ChevronLeft className="h-5 w-5" />
+                                <ChevronLeft className="h-5 w-5 " />
                             </Button>
                         </div>
                         <div className="absolute top-1/2 -translate-y-1/2 right-4 z-10">
@@ -295,7 +289,7 @@ export function ProjectsSlideshow() {
                                 variant="secondary"
                                 size="icon"
                                 onClick={nextSlide}
-                                className="bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
                             >
                                 <ChevronRight className="h-5 w-5" />
                             </Button>
@@ -307,7 +301,7 @@ export function ProjectsSlideshow() {
                                 variant="secondary"
                                 size="icon"
                                 onClick={() => setIsPlaying(!isPlaying)}
-                                className="bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
                             >
                                 {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
                             </Button>
