@@ -4,7 +4,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, Bot } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import BotAnim from "@/public/animations/Bot-Robot.json" // replace with your lottie file
 
@@ -14,7 +15,8 @@ export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isChatOpen, setIsChatOpen] = useState(false)
     const [query, setQuery] = useState("")
-    const [answer, setAnswer] = useState<string | null>(null)
+    const [history, setHistory] = useState<{ query: string; answer: string }[]>([])
+    const [currentIndex, setCurrentIndex] = useState(-1)
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId)
@@ -27,7 +29,10 @@ export function Header() {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && query.trim()) {
             e.preventDefault()
-            setAnswer("blorpx wizzle trank! 🚀") // gibberish placeholder
+            const newAnswer = "Lorem ipsum dolor sit amet, consectetur adipisicing elit.Iusto architecto cumque ipsam porro officia, possimus unde, eaque voluptatum reiciendis dolore numquam minima odit, neque rerum beatae dolores illum consequuntur accusamus ? " // gibberish placeholder
+            const newHistory = [...history, { query, answer: newAnswer }]
+            setHistory(newHistory)
+            setCurrentIndex(newHistory.length - 1) // go to latest
             setQuery("")
         }
     }
@@ -96,11 +101,10 @@ export function Header() {
                         </div>
                     </nav>
                 )}
-
                 {isChatOpen && (
-                    <div className="mt-3 flex justify-end bg-transparent">
-                        <div className="w-full max-w-sm space-y-3">
-                            {/* Input box */}
+                    <div className="absolute top-full right-4 mt-2 z-50">
+                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md border border-border shadow-lg p-3">
+                            {/* Input */}
                             <input
                                 type="text"
                                 value={query}
@@ -109,15 +113,137 @@ export function Header() {
                                 placeholder="Ask me something..."
                                 className="w-full rounded-md px-3 py-2 text-sm bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary"
                             />
-                            {/* Answer box */}
-                            {answer && (
-                                <div className="p-3 rounded-md bg-muted text-sm text-foreground shadow-sm">
-                                    {answer}
-                                </div>
+
+                            {/* If no history yet → Show welcome card */}
+                            {history.length === 0 ? (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="flex flex-col items-center text-center p-4 space-y-4"
+                                >
+                                    <Lottie animationData={BotAnim} loop autoplay style={{ width: 120, height: 120 }} />
+                                    <h3 className="text-lg font-semibold text-foreground">
+                                        For more to know about me
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        <p>Talk with my bot</p>
+                                    </p>
+                                </motion.div>
+                            ) : (
+                                <AnimatePresence mode="wait">
+                                    {currentIndex >= 0 && (
+                                        <motion.div
+                                            key={currentIndex}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -10 }}
+                                            transition={{ duration: 0.3 }}
+                                            className="space-y-2"
+                                        >
+                                            {/* Query (outside box, purple) */}
+                                            <p className="text-sm font-medium text-indigo-500">
+                                                {history[currentIndex].query}
+                                            </p>
+
+                                            {/* Answer (inside gray bubble) */}
+                                            <div className="p-3 rounded-md bg-muted/70 text-sm text-foreground shadow-sm">
+                                                {history[currentIndex].answer}
+                                            </div>
+
+                                            {/* Navigation */}
+                                            <div className="flex justify-between items-center">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    disabled={currentIndex === 0}
+                                                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                                                >
+                                                    <ChevronLeft className="h-5 w-5" />
+                                                </Button>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {currentIndex + 1} / {history.length}
+                                                </span>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    disabled={currentIndex === history.length - 1}
+                                                    onClick={() =>
+                                                        setCurrentIndex((prev) => Math.min(prev + 1, history.length - 1))
+                                                    }
+                                                >
+                                                    <ChevronRight className="h-5 w-5" />
+                                                </Button>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             )}
                         </div>
                     </div>
                 )}
+                {/* 
+                {isChatOpen && (
+                    <div className="absolute top-full right-4 mt-2 z-50">
+                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md border border-border shadow-lg p-3">
+                            <input
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Ask me something..."
+                                className="w-full rounded-md px-3 py-2 text-sm bg-background border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+
+                            <AnimatePresence mode="wait">
+                                {currentIndex >= 0 && (
+                                    <motion.div
+                                        key={currentIndex}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="space-y-2"
+                                    >
+                                        <p className="text-sm font-medium text-indigo-500">
+                                            {history[currentIndex].query}
+                                        </p>
+
+                                        <div className="p-3 rounded-md bg-muted/70 text-sm text-foreground shadow-sm">
+                                            {history[currentIndex].answer}
+                                        </div>
+
+                                        <div className="flex justify-between items-center">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                disabled={currentIndex === 0}
+                                                onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                                            >
+                                                <ChevronLeft className="h-5 w-5" />
+                                            </Button>
+                                            <span className="text-xs text-muted-foreground">
+                                                {currentIndex + 1} / {history.length}
+                                            </span>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                disabled={currentIndex === history.length - 1}
+                                                onClick={() =>
+                                                    setCurrentIndex((prev) =>
+                                                        Math.min(prev + 1, history.length - 1)
+                                                    )
+                                                }
+                                            >
+                                                <ChevronRight className="h-5 w-5" />
+                                            </Button>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                )} */}
             </div>
         </header>
     )

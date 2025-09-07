@@ -10,8 +10,8 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-    title: "Student Portfolio - Showcase Your Journey",
-    description: "A modern student portfolio showcasing projects, skills, and achievements",
+    title: "Kathiravan Portfolio",
+    description: "My portfolio showcasing projects, skills, and achievements",
     generator: "v0.app",
 }
 
