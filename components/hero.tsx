@@ -34,7 +34,7 @@ export function Hero() {
                         className="mb-8"
                     >
                         <img
-                            src="/professional-student-headshot.jpg"
+                            src="/profile.jpg"
                             alt="Kathiravan"
                             className="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto border-4 border-primary/20 shadow-2xl hover:scale-105 transition-transform duration-300"
                         />

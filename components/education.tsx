@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { GraduationCap, Award, Calendar } from "lucide-react"
+import { GraduationCap, Award, Calendar, Briefcase } from "lucide-react"
 
 const education = [
     {
@@ -27,9 +27,26 @@ const certifications = [
     "Coursera Machine Learning Certificate"
 ]
 
+const experience = [
+    {
+        role: "AI Research Intern",
+        company: "Blubridge",
+        period: "28.05.2025 - 29.06.2025", // 👉 you can edit dates later
+        description:
+            "Worked on implementing an LLM like GPT from scratch. Gained hands-on experience with distributed training (DDP, UDA) and model architecture design. Improved my ability to interpret and apply research papers into working solutions.",
+        highlights: [
+            "Implemented GPT-like architecture from scratch",
+            "Worked with Distributed Data Parallel (DDP)",
+            "Enhanced research-to-code documentation workflow",
+            "Hands on experience with writing custom pytorch functions",
+            "Creating custom learning functions to the model"
+        ]
+    }
+]
+
 export function Education() {
     return (
-        <section id="education" className="py-20 bg-background">
+        <section id="education" className="py-20 relative bg-gradient-to-br from-background via-muted/10 to-background">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">Education & Certifications</h2>
@@ -112,6 +129,41 @@ export function Education() {
                                     </div>
                                 </CardContent>
                             </Card>
+                        </div>
+                    </div>
+
+
+                    <div className="mt-16">
+                        <h3 className="text-2xl font-semibold mb-6 flex items-center">
+                            <Briefcase className="h-6 w-6 mr-2 text-accent" />
+                            Experience
+                        </h3>
+
+                        <div className="space-y-6">
+                            {experience.map((exp, index) => (
+                                <Card key={index}>
+                                    <CardHeader>
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <CardTitle className="text-lg">{exp.role}</CardTitle>
+                                                <CardDescription className="text-accent font-medium">{exp.company}</CardDescription>
+                                            </div>
+                                            <div className="text-right text-sm text-muted-foreground flex items-center">
+                                                <Calendar className="h-4 w-4 mr-1" />
+                                                {exp.period}
+                                            </div>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-muted-foreground mb-4">{exp.description}</p>
+                                        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                                            {exp.highlights.map((point, i) => (
+                                                <li key={i}>{point}</li>
+                                            ))}
+                                        </ul>
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
                     </div>
                 </div>

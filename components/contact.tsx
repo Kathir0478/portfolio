@@ -21,7 +21,7 @@ export function Contact() {
     })
     const [isSending, setIsSending] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
-
+    const [isNotify, setNotify] = useState(false)
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSending(true)
@@ -42,6 +42,10 @@ export function Contact() {
             console.log("SUCCESS!", result.text)
             setIsSuccess(true)
             setFormData({ name: "", email: "", subject: "", message: "" })
+            setNotify(true);
+            setTimeout(() => {
+                setNotify(false)
+            }, 7000)
             toast({
                 title: "Message Sent",
                 description: "Thanks! I'll get back to you shortly."
@@ -67,7 +71,7 @@ export function Contact() {
     }
 
     return (
-        <section id="contact" className="py-20 bg-background">
+        <section id="contact" className="py-20 relative bg-gradient-to-br from-background via-muted/10 to-background">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">Get In Touch</h2>
@@ -137,11 +141,11 @@ export function Contact() {
                                 <CardContent>
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
+                                            <div className="space-y-2">
                                                 <Label htmlFor="name">Name</Label>
                                                 <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
                                             </div>
-                                            <div>
+                                            <div className="space-y-2">
                                                 <Label htmlFor="email">Email</Label>
                                                 <Input
                                                     id="email"
@@ -154,12 +158,12 @@ export function Contact() {
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div className="space-y-2">
                                             <Label htmlFor="subject">Subject</Label>
                                             <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
                                         </div>
 
-                                        <div>
+                                        <div className="space-y-2">
                                             <Label htmlFor="message">Message</Label>
                                             <Textarea
                                                 id="message"
@@ -177,6 +181,11 @@ export function Contact() {
                                         </Button>
                                     </form>
                                 </CardContent>
+                                {isNotify &&
+                                    <div className="flex justify-center items-center">
+                                        <h2 className="text-black dark:text-white">Thanks! I'll get back to you shortly !!!</h2>
+                                    </div>
+                                }
                             </Card>
                         </div>
                     </div>

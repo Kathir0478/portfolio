@@ -272,86 +272,70 @@ function InteractiveSkillsGrid() {
                 </div>
             </div>
 
-            {/* Skills Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                 {filteredSkills.map((skill, index) => (
                     <div
                         key={`${skill.name}-${index}`}
-                        className={`relative group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg
-                       border-2 ${getSkillBorder(skill.level)} rounded-xl overflow-hidden`}
+                        className={`relative group cursor-pointer transition-all duration-500 
+                 border ${getSkillBorder(skill.level)} rounded-2xl overflow-hidden h-full
+                 bg-gradient-to-br ${getSkillColor(skill.level)}/10 backdrop-blur-md
+                 shadow-md hover:shadow-xl hover:scale-[1.04]
+                 dark:from-gray-900 dark:to-black from-white to-gray-100`}
                     >
-                        {/* Background Gradient */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${getSkillColor(skill.level)} opacity-10`} />
+                        {/* Hover Glow */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 
+                      bg-gradient-to-br from-white/30 via-transparent to-white/10 
+                      dark:from-white/10 dark:via-transparent dark:to-white/5 blur-2xl" />
 
-                        {/* Content */}
-                        <div className="relative p-4 bg-background/80 backdrop-blur-sm">
-                            <div className="flex items-center justify-between mb-2">
-                                <h4 className="font-semibold text-sm truncate">{skill.name}</h4>
-                                <div className="flex items-center gap-1">
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className={`h-3 w-3 ${i < Math.floor(skill.level / 20) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                                }`}
-                                        />
-                                    ))}
+                        {/* Card Content */}
+                        <div className="relative p-5 flex flex-col justify-between h-full z-10">
+                            {/* Title + Stars */}
+                            <div>
+                                <div className="flex items-center justify-between mb-3">
+                                    <h4 className="font-semibold text-base truncate 
+                           bg-clip-text text-transparent 
+                           bg-gradient-to-r from-gray-900 to-gray-600 
+                           dark:from-white dark:to-gray-300">
+                                        {skill.name}
+                                    </h4>
+                                    <div className="flex items-center gap-1">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <Star
+                                                key={i}
+                                                className={`h-4 w-4 transition-colors duration-300 ${i < Math.floor(skill.level / 20)
+                                                    ? "text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.7)]"
+                                                    : "text-gray-300 dark:text-gray-600"
+                                                    }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Progress Bar */}
+                                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2 mb-3 overflow-hidden">
+                                    <div
+                                        className={`h-2 rounded-full bg-gradient-to-r ${getSkillColor(
+                                            skill.level
+                                        )} shadow-[0_0_8px_rgba(255,255,255,0.3)] transition-all duration-700`}
+                                        style={{ width: `${skill.level}%` }}
+                                    />
                                 </div>
                             </div>
 
-                            {/* Progress Bar */}
-                            <div className="w-full bg-muted rounded-full h-2 mb-2">
-                                <div
-                                    className={`h-2 rounded-full bg-gradient-to-r ${getSkillColor(skill.level)} transition-all duration-500`}
-                                    style={{ width: `${skill.level}%` }}
-                                />
-                            </div>
-
-                            <div className="flex justify-between items-center text-xs text-muted-foreground">
-                                <span>{skill.category}</span>
-                                <span className="font-medium">{skill.level}%</span>
+                            {/* Footer Info */}
+                            <div className="flex justify-between items-center text-xs font-medium">
+                                <span className="uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                                    {skill.category}
+                                </span>
+                                <span className="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-lg shadow-inner 
+                           text-gray-700 dark:text-gray-200">
+                                    {skill.level}%
+                                </span>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-
-            {/* Skill Detail Panel
-            {selectedSkill && (
-                <Card className="border-primary/50 bg-gradient-to-r from-background to-muted/30">
-                    <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <CardTitle className="flex items-center gap-2">
-                                {selectedSkill.name}
-                                <div className="flex items-center gap-1">
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className={`h-4 w-4 ${i < Math.floor(selectedSkill.level / 20) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                                }`}
-                                        />
-                                    ))}
-                                </div>
-                            </CardTitle>
-                            <Button variant="ghost" size="sm" onClick={() => setSelectedSkill(null)}>
-                                ✕
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                                <span className="text-sm text-muted-foreground">Proficiency Level</span>
-                                <Badge variant="outline">{selectedSkill.level}%</Badge>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span className="text-sm text-muted-foreground">Category</span>
-                                <Badge>{selectedSkill.category}</Badge>
-                            </div>
-                            <p className="text-sm leading-relaxed">{selectedSkill.description}</p>
-                        </div>
-                    </CardContent>
-                </Card>
-            )} */}
 
             {/* Category Legend */}
             <div className="flex flex-wrap gap-4 justify-center text-xs">
@@ -445,3 +429,4 @@ export function Skills() {
         </section>
     )
 }
+
