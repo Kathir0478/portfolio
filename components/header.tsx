@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, ChevronLeft, ChevronRight } from "lucide-react"
@@ -11,11 +11,18 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [isChatOpen, setIsChatOpen] = useState(false)
+    const [isChatOpen, setIsChatOpen] = useState(true)
     const [query, setQuery] = useState("")
     const [history, setHistory] = useState<{ query: string; answer: string }[]>([])
     const [currentIndex, setCurrentIndex] = useState(-1)
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsChatOpen(false)
+        }, 6000) // disappears after 6 seconds
+        return () => clearTimeout(timer)
+    }, [])
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId)
@@ -125,7 +132,8 @@ export function Header() {
                 {/* Chat Box */}
                 {isChatOpen && (
                     <div className="absolute top-full right-4 mt-2 z-50">
-                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md border border-border shadow-lg p-3">
+                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md  border-border p-3 ring-2 ring-primary/60 shadow-violet-500 animate-pulse">
+
                             {/* Input */}
                             <input
                                 type="text"
