@@ -29,18 +29,18 @@ export function Header() {
             setIsLoading(true)
 
             try {
-                // Call your Flask API
-                console.log(query)
-                console.log(`${process.env.NEXT_PUBLIC_API_URL}/chat`)
+                // // Call your Flask API
+                // console.log(query)
+                // console.log(`${process.env.NEXT_PUBLIC_API_URL}/chat`)
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ question: query }),
                 })
-                console.log(query)
+                // console.log(query)
                 const data = await response.json()
                 const answer = data.response || "Sorry, I couldn't generate an answer."
-                console.log(answer)
+                // console.log(answer)
                 setHistory((prevHistory) => {
                     const newHistory = [...prevHistory, { query, answer }]
                     setCurrentIndex(newHistory.length - 1) // always go to the latest
@@ -81,12 +81,12 @@ export function Header() {
                         <ThemeToggle />
 
                         {/* Bot toggle */}
-                        {/* <button
+                        <button
                             onClick={() => setIsChatOpen(!isChatOpen)}
                             className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-muted/50 transition"
                         >
                             <Lottie animationData={BotAnim} loop autoplay style={{ width: 28, height: 28 }} />
-                        </button> */}
+                        </button>
                     </nav>
 
                     {/* Mobile Menu Controls */}
