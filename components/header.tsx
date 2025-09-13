@@ -36,18 +36,13 @@ export function Header() {
             setIsLoading(true)
 
             try {
-                // // Call your Flask API
-                // console.log(query)
-                // console.log(`${process.env.NEXT_PUBLIC_API_URL}/chat`)
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ question: query }),
                 })
-                // console.log(query)
                 const data = await response.json()
                 const answer = data.response || "Sorry, I couldn't generate an answer."
-                // console.log(answer)
                 setHistory((prevHistory) => {
                     const newHistory = [...prevHistory, { query, answer }]
                     setCurrentIndex(newHistory.length - 1) // always go to the latest
@@ -132,7 +127,7 @@ export function Header() {
                 {/* Chat Box */}
                 {isChatOpen && (
                     <div className="absolute top-full right-4 mt-2 z-50">
-                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md  border-border p-3 ring-2 ring-primary/60 shadow-violet-500 animate-pulse">
+                        <div className="w-80 space-y-3 rounded-lg bg-background/80 backdrop-blur-md  border-border p-3 ring-2 ring-primary/60 shadow-violet-500">
 
                             {/* Input */}
                             <input
