@@ -7,6 +7,7 @@ import { Menu, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import dynamic from "next/dynamic"
 import BotAnim from "@/public/animations/Bot-Robot.json"
+import LoadingAnim from "@/public/animations/loading.json"
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 export function Header() {
@@ -148,7 +149,10 @@ export function Header() {
                                     transition={{ duration: 0.4 }}
                                     className="flex flex-col items-center text-center p-4 space-y-4"
                                 >
-                                    <Lottie animationData={BotAnim} loop autoplay style={{ width: 120, height: 120 }} />
+                                    {isLoading ?
+                                        <Lottie animationData={LoadingAnim} loop autoplay style={{ width: 160, height: 160 }} /> :
+                                        <Lottie animationData={BotAnim} loop autoplay style={{ width: 120, height: 120 }} />
+                                    }
                                     <h3 className="text-lg font-semibold text-foreground">
                                         For more to know about me
                                     </h3>
