@@ -8,7 +8,6 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     const rows = new Array(120).fill(1); // slightly fewer rows for bigger squares
     const cols = new Array(80).fill(1);
 
-    // Neon-inspired palette (works on both dark & light)
     let colors = [
         "#38bdf8", // sky-400
         "#818cf8", // indigo-400

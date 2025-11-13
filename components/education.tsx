@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { GraduationCap, Award, Calendar, Briefcase } from "lucide-react"
+import { GraduationCap, Award, Calendar, Briefcase, Car } from "lucide-react"
+import { CardHoverWrapper } from "./ui/card-hover-wrapper"
 
 const education = [
     {
@@ -46,7 +47,7 @@ const experience = [
 
 export function Education() {
     return (
-        <section id="education" className="py-20 relative bg-gradient-to-br from-background via-muted/10 to-background">
+        <section id="education" className="py-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">Education & Certifications</h2>
@@ -61,26 +62,30 @@ export function Education() {
 
                             <div className="space-y-6">
                                 {education.map((edu, index) => (
-                                    <Card key={index}>
-                                        <CardHeader>
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <CardTitle className="text-lg text-balance">{edu.degree}</CardTitle>
-                                                    <CardDescription className="text-accent font-medium">{edu.school}</CardDescription>
-                                                </div>
-                                                <div className="text-right text-sm text-muted-foreground">
-                                                    <div className="flex items-center">
-                                                        <Calendar className="h-4 w-4 mr-1" />
-                                                        {edu.period}
+                                    <CardHoverWrapper key={index}>
+                                        <Card
+                                            key={index}
+                                        >
+                                            <CardHeader>
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <CardTitle className="text-lg text-balance">{edu.degree}</CardTitle>
+                                                        <CardDescription className="text-accent font-medium">{edu.school}</CardDescription>
                                                     </div>
-                                                    <div className="font-medium">GPA: {edu.gpa}</div>
+                                                    <div className="text-right text-sm text-muted-foreground">
+                                                        <div className="flex items-center">
+                                                            <Calendar className="h-4 w-4 mr-1" />
+                                                            {edu.period}
+                                                        </div>
+                                                        <div className="font-medium">GPA: {edu.gpa}</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-muted-foreground mb-4 text-pretty">{edu.description}</p>
-                                        </CardContent>
-                                    </Card>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <p className="text-muted-foreground mb-4 text-pretty">{edu.description}</p>
+                                            </CardContent>
+                                        </Card>
+                                    </CardHoverWrapper>
                                 ))}
                             </div>
                         </div>
@@ -92,43 +97,46 @@ export function Education() {
                                 Certifications
                             </h3>
 
-                            <Card>
-                                <CardContent className="p-6">
-                                    <div className="grid gap-4">
-                                        {certifications.map((cert, index) => (
-                                            <div key={index} className="flex items-center p-3 bg-muted rounded-lg">
-                                                <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
-                                                <span className="font-medium">{cert}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
+                            <CardHoverWrapper>
+                                <Card>
+                                    <CardContent className="p-6">
+                                        <div className="grid gap-4">
+                                            {certifications.map((cert, index) => (
+                                                <div key={index} className="flex items-center p-3 bg-muted rounded-lg">
+                                                    <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                                                    <span className="font-medium">{cert}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </CardHoverWrapper>
                             {/* Additional Info */}
-                            <Card className="mt-6">
-                                <CardHeader>
-                                    <CardTitle>Academic Interests</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex flex-wrap gap-2">
-                                        {[
-                                            "Machine Learning",
-                                            "Web Development",
-                                            "Data Science",
-                                            "Data Structures and algorithms",
-                                            "GenAI developer",
-                                            "AI Researcher",
-                                            "Deep Learning and LLM",
-                                            "Backend Developer"
-                                        ].map((interest, index) => (
-                                            <Badge key={index} variant="secondary">
-                                                {interest}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <CardHoverWrapper>
+                                <Card className="mt-6">
+                                    <CardHeader>
+                                        <CardTitle>Academic Interests</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="flex flex-wrap gap-2">
+                                            {[
+                                                "Machine Learning",
+                                                "Web Development",
+                                                "Data Science",
+                                                "Data Structures and algorithms",
+                                                "GenAI developer",
+                                                "AI Researcher",
+                                                "Deep Learning and LLM",
+                                                "Backend Developer"
+                                            ].map((interest, index) => (
+                                                <Badge key={index} variant="secondary">
+                                                    {interest}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </CardHoverWrapper>
                         </div>
                     </div>
 
@@ -141,28 +149,30 @@ export function Education() {
 
                         <div className="space-y-6">
                             {experience.map((exp, index) => (
-                                <Card key={index}>
-                                    <CardHeader>
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <CardTitle className="text-lg">{exp.role}</CardTitle>
-                                                <CardDescription className="text-accent font-medium">{exp.company}</CardDescription>
+                                <CardHoverWrapper key={index}>
+                                    <Card key={index}>
+                                        <CardHeader>
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <CardTitle className="text-lg">{exp.role}</CardTitle>
+                                                    <CardDescription className="text-accent font-medium">{exp.company}</CardDescription>
+                                                </div>
+                                                <div className="text-right text-sm text-muted-foreground flex items-center">
+                                                    <Calendar className="h-4 w-4 mr-1" />
+                                                    {exp.period}
+                                                </div>
                                             </div>
-                                            <div className="text-right text-sm text-muted-foreground flex items-center">
-                                                <Calendar className="h-4 w-4 mr-1" />
-                                                {exp.period}
-                                            </div>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-muted-foreground mb-4">{exp.description}</p>
-                                        <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                                            {exp.highlights.map((point, i) => (
-                                                <li key={i}>{point}</li>
-                                            ))}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <p className="text-muted-foreground mb-4">{exp.description}</p>
+                                            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                                                {exp.highlights.map((point, i) => (
+                                                    <li key={i}>{point}</li>
+                                                ))}
+                                            </ul>
+                                        </CardContent>
+                                    </Card>
+                                </CardHoverWrapper>
                             ))}
                         </div>
                     </div>

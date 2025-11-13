@@ -7,7 +7,7 @@ import AboutAnimation from "@/public/animations/About-Avatar.json"
 
 export function About() {
     return (
-        <section id="about" className="py-20 bg-gradient-to-br from-muted/20 via-background to-muted/10">
+        <section id="about" className="py-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <motion.div
@@ -67,7 +67,7 @@ export function About() {
                             <div className="grid grid-cols-2 gap-4 pt-6">
                                 <motion.div
                                     whileHover={{ scale: 1.05 }}
-                                    className="text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
+                                    className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
                                 >
                                     <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                                         10+
@@ -76,7 +76,7 @@ export function About() {
                                 </motion.div>
                                 <motion.div
                                     whileHover={{ scale: 1.05 }}
-                                    className="text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
+                                    className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/30 rounded-xl border border-border/50 shadow-lg"
                                 >
                                     <div className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                                         7+
@@ -94,22 +94,22 @@ export function About() {
                         viewport={{ once: true }}
                         className="grid md:grid-cols-4 gap-6"
                     >
-                        <div className="text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
+                        <div className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
                             <Code className="h-12 w-12 mx-auto mb-4 text-primary" />
                             <h3 className="font-semibold mb-2">Clean Code</h3>
                             <p className="text-sm text-muted-foreground">Writing maintainable and efficient code</p>
                         </div>
-                        <div className="text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
+                        <div className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
                             <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
                             <h3 className="font-semibold mb-2">Collaboration</h3>
                             <p className="text-sm text-muted-foreground">Working together to build amazing things</p>
                         </div>
-                        <div className="text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
+                        <div className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
                             <Award className="h-12 w-12 mx-auto mb-4 text-primary" />
                             <h3 className="font-semibold mb-2">Excellence</h3>
                             <p className="text-sm text-muted-foreground">Striving for quality in every project</p>
                         </div>
-                        <div className="text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
+                        <div className="pointer-events-auto z-50 text-center p-6 bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border/30 hover:shadow-lg transition-all duration-300">
                             <Coffee className="h-12 w-12 mx-auto mb-4 text-primary" />
                             <h3 className="font-semibold mb-2">Innovation</h3>
                             <p className="text-sm text-muted-foreground">Always exploring new possibilities</p>

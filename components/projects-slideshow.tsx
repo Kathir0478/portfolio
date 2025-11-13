@@ -173,7 +173,7 @@ export function ProjectsSlideshow() {
     useEffect(() => {
         if (!isPlaying || selectedProject) return
 
-        const interval = setInterval(nextSlide, 5000) // 5 seconds
+        const interval = setInterval(nextSlide, 10000) // 5 seconds
         return () => clearInterval(interval)
     }, [isPlaying, selectedProject, nextSlide])
 
@@ -188,7 +188,7 @@ export function ProjectsSlideshow() {
     }
 
     return (
-        <section id="projects" className="py-20 bg-gradient-to-br from-background via-muted/20 to-background">
+        <section id="projects" className="py-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
