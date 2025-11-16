@@ -10,21 +10,6 @@ import { Chatbot } from "@/components/chatbot"
 
 export default function Home() {
     return (
-        // <div className="relative z-10 overflow-hidden">
-        //     <Header />
-        //     <main>
-        //         <Hero />
-        //         <About />
-        //         <ProjectsSlideshow />
-        //         <Education />
-        //         <Skills />
-        //         <Contact />
-        //     </main>
-        //     <Footer />
-        // </div>
-        // <div className="fixed bottom-4 right-4 z-50 pointer-events-auto">
-        //         <Chatbot />
-        //     </div>
         <div className="min-h-screen relative w-full overflow-y-auto">
             <div className="relative z-10">
                 <Header />
@@ -39,10 +24,9 @@ export default function Home() {
                 <Footer />
             </div>
 
-            {/* Chatbot fixed at bottom-right, interactive */}
-            <div className="fixed bottom-4 right-4 z-50 pointer-events-auto">
+            {/* <div className="fixed bottom-4 right-4 z-50 pointer-events-auto">
                 <Chatbot />
-            </div>
+            </div> */}
         </div>
     );
 }

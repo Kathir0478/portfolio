@@ -4,10 +4,10 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X } from "lucide-react"
+import { motion } from "framer-motion"
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId)
@@ -17,7 +17,12 @@ export function Header() {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-sm">
-            <div className="container mx-auto px-4 py-4">
+            <motion.div
+                initial={{ y: -50, opacity: 1 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="container mx-auto px-4 py-4"
+            >
                 <div className="flex items-center justify-between">
                     <div className="text-xl font-bold text-foreground hover:text-accent transition-colors duration-200">
                         Kathiravan
@@ -29,7 +34,7 @@ export function Header() {
                             <button
                                 key={item}
                                 onClick={() => scrollToSection(item)}
-                                className="text-muted-foreground hover:text-foreground transition-all duration-200 capitalize font-medium hover:scale-105"
+                                className="text-muted-foreground hover:text-accent transition-all duration-200 capitalize font-medium hover:scale-105"
                             >
                                 {item}
                             </button>
@@ -54,7 +59,7 @@ export function Header() {
                                 <button
                                     key={item}
                                     onClick={() => scrollToSection(item)}
-                                    className="text-left text-muted-foreground hover:text-foreground transition-colors capitalize font-medium"
+                                    className="text-left text-muted-foreground hover:text-accent transition-colors capitalize font-medium"
                                 >
                                     {item}
                                 </button>
@@ -63,7 +68,7 @@ export function Header() {
                     </nav>
                 )}
 
-            </div>
+            </motion.div>
         </header>
     )
 }

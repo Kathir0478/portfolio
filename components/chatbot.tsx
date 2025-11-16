@@ -144,7 +144,7 @@ export function Chatbot() {
                                                     <ChevronRight className="h-5 w-5" />
                                                 </Button>
                                                 <Button
-                                                    className="rounded-full h-12 w-12 m-3 bg-accent "
+                                                    className="rounded-full h-12 w-12 bg-accent "
                                                     onClick={() => {
                                                         setIsBotOpen(!isBotOpen)
                                                         setIsBotOpen(!isBotOpen)
@@ -163,7 +163,7 @@ export function Chatbot() {
             )}
             {!isBotOpen &&
                 <Button
-                    className="rounded-full h-12 w-12 m-6 bg-accent"
+                    className="rounded-full h-12 w-12 m-10 bg-accent"
                     onClick={() => {
                         setIsBotOpen(!isBotOpen)
                         setIsBotOpen(!isBotOpen)
