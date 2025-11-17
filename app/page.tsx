@@ -10,10 +10,10 @@ import { Chatbot } from "@/components/chatbot"
 
 export default function Home() {
     return (
-        <div className="min-h-screen relative w-full overflow-y-auto">
-            <div className="relative z-10">
+        <div className="min-h-screen relative w-full overflow-hidden">
+            <div className="relative z-10 overflow-hidden">
                 <Header />
-                <main>
+                <main >
                     <Hero />
                     <About />
                     <ProjectsSlideshow />

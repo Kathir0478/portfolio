@@ -12,7 +12,7 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
 
 export function Chatbot() {
-    const [isBotOpen, setIsBotOpen] = useState(true)
+    const [isBotOpen, setIsBotOpen] = useState(false)
     const [query, setQuery] = useState("")
     const [history, setHistory] = useState<{ query: string; answer: string }[]>([])
     const [currentIndex, setCurrentIndex] = useState(-1)
@@ -20,8 +20,15 @@ export function Chatbot() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            setIsBotOpen(true)
+        }, 1000)
+        return () => clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
             setIsBotOpen(false)
-        }, 6000) // disappears after 6 seconds
+        }, 6000)
         return () => clearTimeout(timer)
     }, [])
 

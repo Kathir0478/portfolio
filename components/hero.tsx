@@ -33,8 +33,8 @@ export function Hero() {
                             <div className="max-w-5xl mx-auto space-y-6">
 
                                 <motion.img
-                                    initial={{ scale: 1.5 }}
-                                    animate={{ scale: 1 }}
+                                    initial={{ scale: 1.5, y: 200 }}
+                                    animate={{ scale: 1, y: 0 }}
                                     transition={{ duration: 1, ease: "easeOut" }}
                                     src="/profile.jpg"
                                     alt="Kathiravan"

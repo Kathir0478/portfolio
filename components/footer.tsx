@@ -7,8 +7,8 @@ export function Footer() {
     return (
         <ScrollFade>
             <CardHoverWrapper>
-                <footer className="bg-primary dark:bg-background text-primary-foreground dark:text-white py-12 transition-colors duration-300">
-                    <div className="container mx-auto px-4 max-w-6xl">
+                <footer className="bg-primary dark:bg-background text-primary-foreground dark:text-white px-4 py-18 transition-colors duration-300 ">
+                    <div className="container mx-auto px-4 w-full">
                         <div className="grid md:grid-cols-3 gap-8">
                             {/* About */}
                             <div>
