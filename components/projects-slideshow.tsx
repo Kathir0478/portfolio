@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Play, Pause, X } from "lucide-react"
+import { Github, ChevronLeft, ChevronRight, Play, Pause, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
 
 const projects = [
     {
@@ -191,16 +192,18 @@ export function ProjectsSlideshow() {
         <section id="projects" className="py-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent">
-                            Featured Projects
-                        </h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            Explore my latest work and discover the technologies and solutions I've built
-                        </p>
-                    </div>
+                    <ScrollFadeInAndOut>
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-purple-600 to-primary bg-clip-text text-transparent">
+                                Featured Projects
+                            </h2>
+                            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                                Explore my latest work and discover the technologies and solutions I've built
+                            </p>
+                        </div>
+                    </ScrollFadeInAndOut>
 
-                    {/* Slideshow Container */}
+
                     <div className="relative mb-8">
                         <div className="relative h-[500px] md:h-[600px] overflow-hidden rounded-2xl shadow-2xl">
                             <AnimatePresence mode="wait">
@@ -216,7 +219,7 @@ export function ProjectsSlideshow() {
                                         className="h-full cursor-pointer group border-0 bg-gradient-to-br from-card via-card/95 to-muted/30 hover:shadow-2xl transition-all duration-500"
                                         onClick={() => handleProjectClick(projects[currentIndex])}
                                     >
-                                        <div className="grid md:grid-cols-2 h-full">
+                                        <div className="grid md:grid-cols-2 h-full ">
                                             <div className="relative overflow-hidden">
                                                 <img
                                                     src={projects[currentIndex].image || "/placeholder.svg"}
@@ -274,52 +277,40 @@ export function ProjectsSlideshow() {
                         </div>
 
                         {/* Navigation Controls */}
-                        <div className="absolute top-1/2 -translate-y-1/2 left-4 z-10">
-                            <Button
-                                variant="secondary"
-                                size="icon"
-                                onClick={prevSlide}
-                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
-                            >
-                                <ChevronLeft className="h-5 w-5 " />
-                            </Button>
-                        </div>
-                        <div className="absolute top-1/2 -translate-y-1/2 right-4 z-10">
-                            <Button
-                                variant="secondary"
-                                size="icon"
-                                onClick={nextSlide}
-                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
-                            >
-                                <ChevronRight className="h-5 w-5" />
-                            </Button>
-                        </div>
+                        <ScrollFadeInAndOut>
+                            <div className="absolute top-1/2 -translate-y-1/2 left-4 z-10">
+                                <Button
+                                    variant="secondary"
+                                    size="icon"
+                                    onClick={prevSlide}
+                                    className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                >
+                                    <ChevronLeft className="h-5 w-5 " />
+                                </Button>
+                            </div>
+                            <div className="absolute top-1/2 -translate-y-1/2 right-4 z-10">
+                                <Button
+                                    variant="secondary"
+                                    size="icon"
+                                    onClick={nextSlide}
+                                    className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
+                                >
+                                    <ChevronRight className="h-5 w-5" />
+                                </Button>
+                            </div>
 
-                        {/* Play/Pause Control */}
-                        <div className="absolute bottom-4 left-4 z-10">
-                            <Button
-                                variant="secondary"
-                                size="icon"
-                                onClick={() => setIsPlaying(!isPlaying)}
-                                className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
-                            >
-                                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Slide Indicators */}
-                    <div className="flex justify-center space-x-2 mb-8">
-                        {projects.map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => goToSlide(index)}
-                                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex
-                                    ? "bg-primary scale-125"
-                                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                                    }`}
-                            />
-                        ))}
+                            {/* Play/Pause Control */}
+                            <div className="absolute bottom-4 left-4 z-10">
+                                <Button
+                                    variant="secondary"
+                                    size="icon"
+                                    onClick={() => setIsPlaying(!isPlaying)}
+                                    className="bg-accent/80 dark:bg-accent/80 backdrop-blur-sm hover:bg-accent/90 shadow-lg"
+                                >
+                                    {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                                </Button>
+                            </div>
+                        </ScrollFadeInAndOut>
                     </div>
 
                 </div>

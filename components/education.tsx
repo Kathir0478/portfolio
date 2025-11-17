@@ -1,7 +1,12 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Award, Calendar, Briefcase, Car } from "lucide-react"
 import { CardHoverWrapper } from "./ui/card-hover-wrapper"
+import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
+import ScrollFromLeft from "./ui/scroll-from-left"
+import ScrollFromRight from "./ui/scroll-from-right"
 
 const education = [
     {
@@ -50,132 +55,137 @@ export function Education() {
         <section id="education" className="py-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">Education & Certifications</h2>
-
+                    <ScrollFadeInAndOut>
+                        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-balance">Education & Certifications</h2>
+                    </ScrollFadeInAndOut>
                     <div className="grid lg:grid-cols-2 gap-8">
                         {/* Education */}
-                        <div>
+                        <ScrollFromLeft>
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-6 flex items-center">
+                                    <GraduationCap className="h-6 w-6 mr-2 text-accent" />
+                                    Education
+                                </h3>
+
+                                <div className="space-y-6">
+                                    {education.map((edu, index) => (
+                                        <CardHoverWrapper key={index}>
+                                            <Card
+                                                key={index}
+                                                className="py-6"
+                                            >
+                                                <CardHeader>
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <CardTitle className="text-lg text-balance">{edu.degree}</CardTitle>
+                                                            <CardDescription className="text-accent font-medium">{edu.school}</CardDescription>
+                                                        </div>
+                                                        <div className="text-right text-sm text-muted-foreground">
+                                                            <div className="flex items-center">
+                                                                <Calendar className="h-4 w-4 mr-1" />
+                                                                {edu.period}
+                                                            </div>
+                                                            <div className="font-medium">GPA: {edu.gpa}</div>
+                                                        </div>
+                                                    </div>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p className="text-muted-foreground mb-4 text-pretty">{edu.description}</p>
+                                                </CardContent>
+                                            </Card>
+                                        </CardHoverWrapper>
+                                    ))}
+                                </div>
+                            </div>
+                        </ScrollFromLeft>
+                        <ScrollFromRight>
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-6 flex items-center">
+                                    <Award className="h-6 w-6 mr-2 text-accent" />
+                                    Certifications
+                                </h3>
+
+                                <CardHoverWrapper>
+                                    <Card className="py-6">
+                                        <CardContent className="p-6">
+                                            <div className="grid gap-4">
+                                                {certifications.map((cert, index) => (
+                                                    <div key={index} className="flex items-center p-3 bg-muted rounded-lg">
+                                                        <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
+                                                        <span className="font-medium">{cert}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </CardHoverWrapper>
+                                {/* Additional Info */}
+                                <CardHoverWrapper>
+                                    <Card className="mt-6 py-6">
+                                        <CardHeader>
+                                            <CardTitle>Academic Interests</CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="flex flex-wrap gap-2">
+                                                {[
+                                                    "Machine Learning",
+                                                    "Web Development",
+                                                    "Data Science",
+                                                    "Data Structures and algorithms",
+                                                    "GenAI developer",
+                                                    "AI Researcher",
+                                                    "Deep Learning and LLM",
+                                                    "Backend Developer"
+                                                ].map((interest, index) => (
+                                                    <Badge key={index} variant="secondary">
+                                                        {interest}
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </CardHoverWrapper>
+                            </div>
+                        </ScrollFromRight>
+                    </div>
+
+                    <ScrollFadeInAndOut>
+                        <div className="mt-16">
                             <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                                <GraduationCap className="h-6 w-6 mr-2 text-accent" />
-                                Education
+                                <Briefcase className="h-6 w-6 mr-2 text-accent" />
+                                Experience
                             </h3>
 
                             <div className="space-y-6">
-                                {education.map((edu, index) => (
+                                {experience.map((exp, index) => (
                                     <CardHoverWrapper key={index}>
-                                        <Card
-                                            key={index}
-                                        >
+                                        <Card key={index} className="py-6">
                                             <CardHeader>
                                                 <div className="flex justify-between items-start">
                                                     <div>
-                                                        <CardTitle className="text-lg text-balance">{edu.degree}</CardTitle>
-                                                        <CardDescription className="text-accent font-medium">{edu.school}</CardDescription>
+                                                        <CardTitle className="text-lg">{exp.role}</CardTitle>
+                                                        <CardDescription className="text-accent font-medium">{exp.company}</CardDescription>
                                                     </div>
-                                                    <div className="text-right text-sm text-muted-foreground">
-                                                        <div className="flex items-center">
-                                                            <Calendar className="h-4 w-4 mr-1" />
-                                                            {edu.period}
-                                                        </div>
-                                                        <div className="font-medium">GPA: {edu.gpa}</div>
+                                                    <div className="text-right text-sm text-muted-foreground flex items-center">
+                                                        <Calendar className="h-4 w-4 mr-1" />
+                                                        {exp.period}
                                                     </div>
                                                 </div>
                                             </CardHeader>
                                             <CardContent>
-                                                <p className="text-muted-foreground mb-4 text-pretty">{edu.description}</p>
+                                                <p className="text-muted-foreground mb-4">{exp.description}</p>
+                                                <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                                                    {exp.highlights.map((point, i) => (
+                                                        <li key={i}>{point}</li>
+                                                    ))}
+                                                </ul>
                                             </CardContent>
                                         </Card>
                                     </CardHoverWrapper>
                                 ))}
                             </div>
                         </div>
-
-                        {/* Certifications */}
-                        <div>
-                            <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                                <Award className="h-6 w-6 mr-2 text-accent" />
-                                Certifications
-                            </h3>
-
-                            <CardHoverWrapper>
-                                <Card>
-                                    <CardContent className="p-6">
-                                        <div className="grid gap-4">
-                                            {certifications.map((cert, index) => (
-                                                <div key={index} className="flex items-center p-3 bg-muted rounded-lg">
-                                                    <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
-                                                    <span className="font-medium">{cert}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </CardHoverWrapper>
-                            {/* Additional Info */}
-                            <CardHoverWrapper>
-                                <Card className="mt-6">
-                                    <CardHeader>
-                                        <CardTitle>Academic Interests</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="flex flex-wrap gap-2">
-                                            {[
-                                                "Machine Learning",
-                                                "Web Development",
-                                                "Data Science",
-                                                "Data Structures and algorithms",
-                                                "GenAI developer",
-                                                "AI Researcher",
-                                                "Deep Learning and LLM",
-                                                "Backend Developer"
-                                            ].map((interest, index) => (
-                                                <Badge key={index} variant="secondary">
-                                                    {interest}
-                                                </Badge>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </CardHoverWrapper>
-                        </div>
-                    </div>
-
-
-                    <div className="mt-16">
-                        <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                            <Briefcase className="h-6 w-6 mr-2 text-accent" />
-                            Experience
-                        </h3>
-
-                        <div className="space-y-6">
-                            {experience.map((exp, index) => (
-                                <CardHoverWrapper key={index}>
-                                    <Card key={index}>
-                                        <CardHeader>
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <CardTitle className="text-lg">{exp.role}</CardTitle>
-                                                    <CardDescription className="text-accent font-medium">{exp.company}</CardDescription>
-                                                </div>
-                                                <div className="text-right text-sm text-muted-foreground flex items-center">
-                                                    <Calendar className="h-4 w-4 mr-1" />
-                                                    {exp.period}
-                                                </div>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-muted-foreground mb-4">{exp.description}</p>
-                                            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-                                                {exp.highlights.map((point, i) => (
-                                                    <li key={i}>{point}</li>
-                                                ))}
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
-                                </CardHoverWrapper>
-                            ))}
-                        </div>
-                    </div>
+                    </ScrollFadeInAndOut>
                 </div>
             </div>
         </section>
