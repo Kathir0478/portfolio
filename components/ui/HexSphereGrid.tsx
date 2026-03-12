@@ -1,13 +1,15 @@
-import React, { useRef, useEffect, useState } from "react";
-import { skillCategories, Skill } from "@/data/skills";
+import React, { useRef, useEffect, useMemo, useState } from "react";
+import { skills, Skill, categories } from "@/data/skills";
+import AcceternityCard from "./AcceternityCard"; // custom overlay for selected skill
+
 
 interface CardData {
     title: string;
+    description: string;
     hue: number;
     sat: number;
     light: number;
     level: number;
-    category: string;
     col: number;
     row: number;
     logo: string;
@@ -18,8 +20,16 @@ export default function HexSphereGrid(): JSX.Element {
     const rafRef = useRef<number | null>(null);
     const [isPanning, setIsPanning] = useState(false);
     const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
-    const scaleFactor = 2.5; // 👈 Development control - change this value as needed
+    const [filterCategory, setFilterCategory] = useState<string>("");
+    const [visibleCount, setVisibleCount] = useState<number>(skills.length);
+    // previously used for on-canvas selected card; no longer needed
     const drawnCardsRef = useRef<{ data: CardData; projX: number; projY: number; hexSize: number }[]>([]);
+    const themeRef = useRef({
+        background: "#0b1220",
+        border: "rgba(139, 92, 246, 0.22)",
+        accentRgb: { r: 139, g: 92, b: 246 }, // fallback to --accent (#8b5cf6)
+        isDark: false,
+    });
 
     const stateRef = useRef({
         offsetX: 0,
@@ -34,40 +44,43 @@ export default function HexSphereGrid(): JSX.Element {
     const gridBoundsRef = useRef({ cols: 0, rows: 0, width: 0, height: 0 });
 
     useEffect(() => {
-        const allSkills: Skill[] = skillCategories.flatMap((c) => c.skills);
+        // apply category filter; empty = all categories
+        let allSkills: Skill[] = skills;
+        if (filterCategory) {
+            allSkills = allSkills.filter((s) => s.category === filterCategory);
+        }
+        setVisibleCount(allSkills.length);
+
         const total = allSkills.length;
-        const categoryMap = new Map<string, number>();
-
-        skillCategories.forEach((c, i) => {
-            categoryMap.set(c.title, (i * 360) / Math.max(1, skillCategories.length));
-        });
-
-        // Calculate square grid dimensions
         const cols = Math.ceil(Math.sqrt(total));
         const rows = Math.ceil(total / cols);
 
         const cards: CardData[] = [];
 
-        allSkills.forEach((skill, idx) => {
-            const col = idx % cols;
-            const row = Math.floor(idx / cols);
+        // Fill the entire hex grid (cols * rows) so there are no visible gaps
+        const totalSlots = cols * rows;
 
-            const baseHue = categoryMap.get(skill.category) ?? ((idx * 47) % 360);
+        for (let slot = 0; slot < totalSlots; slot++) {
+            const skill = allSkills[slot % total]; // repeat skills when we run out
+            const col = slot % cols;
+            const row = Math.floor(slot / cols);
+
+            const baseHue = (slot * 47) % 360; // simple index-based color
             const sat = Math.round(50 + Math.min(100, Math.max(0, skill.level)) * 0.4);
             const light = Math.round(46 + Math.min(100, Math.max(0, skill.level)) * 0.1);
 
             cards.push({
                 title: skill.name,
+                description: skill.description,
                 hue: Math.round(baseHue),
                 sat,
                 light,
                 level: skill.level,
-                category: skill.category,
                 col,
                 row,
-                logo: skill.logo
+                logo: skill.logo ?? ""
             });
-        });
+        }
 
         cardsRef.current = cards;
 
@@ -82,6 +95,44 @@ export default function HexSphereGrid(): JSX.Element {
             width: cols * hexWidth + hexWidth / 2,
             height: rows * hexHeight
         };
+    }, [filterCategory]);
+
+    const filterSummary = useMemo(() => {
+        return filterCategory ? `Category: ${filterCategory}` : "Category: All";
+    }, [filterCategory]);
+
+    useEffect(() => {
+        const applyTheme = () => {
+            if (typeof window === "undefined") return;
+            const styles = getComputedStyle(document.documentElement);
+            const bg = styles.getPropertyValue("--card")?.trim();
+            const accent = styles.getPropertyValue("--accent")?.trim();
+            const border = styles.getPropertyValue("--border")?.trim();
+
+            // Canvas supports modern CSS colors (including oklch) in current browsers,
+            // but we still keep an RGB fallback for translucent fills.
+            themeRef.current.background = bg || themeRef.current.background;
+            themeRef.current.border = border ? border : themeRef.current.border;
+            themeRef.current.isDark = document.documentElement.classList.contains("dark");
+
+            // Try to resolve accent to rgb(...) so we can create RGBA strings reliably.
+            if (accent) {
+                const test = document.createElement("div");
+                test.style.color = accent;
+                document.body.appendChild(test);
+                const resolved = getComputedStyle(test).color; // "rgb(r, g, b)" or "rgba(...)"
+                document.body.removeChild(test);
+                const m = resolved.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+                if (m) {
+                    themeRef.current.accentRgb = { r: Number(m[1]), g: Number(m[2]), b: Number(m[3]) };
+                }
+            }
+        };
+
+        applyTheme();
+        const obs = new MutationObserver(applyTheme);
+        obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
+        return () => obs.disconnect();
     }, []);
 
     // Utility functions
@@ -149,17 +200,19 @@ export default function HexSphereGrid(): JSX.Element {
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
+        const context: CanvasRenderingContext2D = ctx;
+        const canvasEl: HTMLCanvasElement = canvas;
 
         let width = 0;
         let height = 0;
 
         function resize() {
             const dpr = window.devicePixelRatio || 1;
-            width = canvas.clientWidth;
-            height = canvas.clientHeight;
-            canvas.width = Math.floor(width * dpr);
-            canvas.height = Math.floor(height * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            width = canvasEl.clientWidth;
+            height = canvasEl.clientHeight;
+            canvasEl.width = Math.floor(width * dpr);
+            canvasEl.height = Math.floor(height * dpr);
+            context.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
 
         resize();
@@ -168,7 +221,7 @@ export default function HexSphereGrid(): JSX.Element {
         drawnCardsRef.current = [];
 
         function render() {
-            ctx.clearRect(0, 0, width, height);
+            context.clearRect(0, 0, width, height);
             const centerX = width / 2;
             const centerY = height / 2;
 
@@ -182,8 +235,8 @@ export default function HexSphereGrid(): JSX.Element {
             const scaledGridWidth = gridWidth * scale;
             const scaledGridHeight = gridHeight * scale;
 
-            ctx.fillStyle = "#071126";
-            ctx.fillRect(0, 0, width, height);
+            context.fillStyle = themeRef.current.background;
+            context.fillRect(0, 0, width, height);
 
             // Calculate how many copies we need to cover the viewport
             const copiesX = Math.ceil(width / scaledGridWidth) + 2;
@@ -191,29 +244,18 @@ export default function HexSphereGrid(): JSX.Element {
 
             for (let copyY = -copiesY; copyY <= copiesY; copyY++) {
                 for (let copyX = -copiesX; copyX <= copiesX; copyX++) {
-
-                    // True hex geometry offsets
-                    const baseSize = 60 * scale;
-                    const hexWidth = baseSize * Math.sqrt(3);
-                    const hexHeight = baseSize * 1.5;
-                    const spacingX = 0.93;
-                    const spacingY = 1.03;
-                    // Each full grid's total width and height
-                    const { cols, rows } = gridBoundsRef.current;
-                    const gridW = cols * hexWidth + hexWidth / 2;
-                    const gridH = rows * hexHeight;
-
-                    const offsetX = copyX * gridW * spacingX + (copyY % 2 ? hexWidth / 2 : 0);
-                    const offsetY = copyY * gridH * 0.97 * spacingY;
                     cards.forEach(card => {
                         // Skip rendering if this is the selected card (it will be rendered separately)
                         if (selectedCard && card === selectedCard) {
                             return;
                         }
 
-                        const [hx, hy] = hexToPixel(card.col, card.row, baseSize);
-                        const screenX = centerX + hx + stateRef.current.offsetX + offsetX;
-                        const screenY = centerY + hy + stateRef.current.offsetY + offsetY;
+                        // Extend the logical hex grid instead of manually offsetting pixels
+                        const virtualCol = card.col + copyX * cols;
+                        const virtualRow = card.row + copyY * rows;
+                        const [hx, hy] = hexToPixel(virtualCol, virtualRow, baseSize);
+                        const screenX = centerX + hx + stateRef.current.offsetX;
+                        const screenY = centerY + hy + stateRef.current.offsetY;
 
                         // Culling
                         if (screenX < -baseSize * 3 || screenX > width + baseSize * 3 ||
@@ -235,61 +277,62 @@ export default function HexSphereGrid(): JSX.Element {
                         drawnCardsRef.current.push({ data: card, projX, projY, hexSize });
 
                         // === Modern Indigo Gradient Hex Card ===
-                        ctx.save();
-                        ctx.globalAlpha = alpha;
+                        context.save();
+                        context.globalAlpha = alpha;
 
-                        const gradient = ctx.createRadialGradient(projX, projY, 0, projX, projY, hexSize);
-                        gradient.addColorStop(0, "rgba(99, 102, 241, 0.55)");
-                        gradient.addColorStop(1, "rgba(67, 56, 202, 0.25)");
+                        const gradient = context.createRadialGradient(projX, projY, 0, projX, projY, hexSize);
+                        const { r, g, b } = themeRef.current.accentRgb;
+                        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.42)`);
+                        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0.14)`);
 
-                        ctx.fillStyle = gradient;
-                        ctx.shadowColor = "rgba(99, 102, 241, 0.45)";
-                        ctx.shadowBlur = 18 * z;
-                        ctx.shadowOffsetX = 0;
-                        ctx.shadowOffsetY = 0;
+                        context.fillStyle = gradient;
+                        context.shadowColor = `rgba(${r}, ${g}, ${b}, 0.32)`;
+                        context.shadowBlur = 18 * z;
+                        context.shadowOffsetX = 0;
+                        context.shadowOffsetY = 0;
 
-                        drawRoundedHexPath(ctx, projX, projY, hexSize - 2, 6);
-                        ctx.fill();
+                        drawRoundedHexPath(context, projX, projY, hexSize - 2, 6);
+                        context.fill();
 
                         // Softer border
-                        ctx.lineWidth = Math.max(0.8, 1.3 * (0.4 + 0.6 * z));
-                        ctx.strokeStyle = "rgba(99,102,241,0.25)";
-                        ctx.stroke();
+                        context.lineWidth = Math.max(0.8, 1.3 * (0.4 + 0.6 * z));
+                        context.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.22)`;
+                        context.stroke();
 
                         // Soft shadow
-                        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-                        ctx.shadowBlur = 12 * z;
-                        ctx.shadowOffsetY = 4 * z;
+                        context.shadowColor = "rgba(0, 0, 0, 0.35)";
+                        context.shadowBlur = 12 * z;
+                        context.shadowOffsetY = 4 * z;
 
                         // === Inner shine / gloss ===
-                        ctx.save();
-                        drawRoundedHexPath(ctx, projX, projY, hexSize - 6, 5)
-                        ctx.clip();
+                        context.save();
+                        drawRoundedHexPath(context, projX, projY, hexSize - 6, 5)
+                        context.clip();
 
-                        const innerGrad = ctx.createRadialGradient(projX, projY, 0, projX, projY, hexSize);
+                        const innerGrad = context.createRadialGradient(projX, projY, 0, projX, projY, hexSize);
                         innerGrad.addColorStop(0, "rgba(255,255,255,0.05)");
                         innerGrad.addColorStop(1, "rgba(0,0,0,0.25)");
-                        ctx.fillStyle = innerGrad;
-                        ctx.fillRect(projX - hexSize, projY - hexSize, hexSize * 2, hexSize * 2);
-                        ctx.restore();
+                        context.fillStyle = innerGrad;
+                        context.fillRect(projX - hexSize, projY - hexSize, hexSize * 2, hexSize * 2);
+                        context.restore();
 
-                        ctx.save();
+                        context.save();
                         if (card.logo) {
                             const logoImg = new Image();
                             logoImg.src = card.logo;
 
                             // If image fails to load, show name
                             logoImg.onerror = () => {
-                                ctx.font = `${Math.max(10, hexSize * 0.3)}px 'Inter', sans-serif`;
-                                ctx.fillStyle = "rgba(255,255,255,0.85)";
-                                ctx.textAlign = "center";
-                                ctx.textBaseline = "middle";
-                                ctx.fillText(card.title || "Skill", projX, projY);
+                                context.font = `${Math.max(10, hexSize * 0.3)}px 'Inter', sans-serif`;
+                                context.fillStyle = "rgba(255,255,255,0.85)";
+                                context.textAlign = "center";
+                                context.textBaseline = "middle";
+                                context.fillText(card.title || "Skill", projX, projY);
                             };
 
                             if (!logoImg.complete) {
                                 logoImg.onload = () => {
-                                    ctx.drawImage(
+                                    context.drawImage(
                                         logoImg,
                                         projX - hexSize / 2.2,
                                         projY - hexSize / 2.2,
@@ -298,7 +341,7 @@ export default function HexSphereGrid(): JSX.Element {
                                     );
                                 };
                             } else {
-                                ctx.drawImage(
+                                context.drawImage(
                                     logoImg,
                                     projX - hexSize / 2.2,
                                     projY - hexSize / 2.2,
@@ -308,92 +351,21 @@ export default function HexSphereGrid(): JSX.Element {
                             }
                         } else {
                             // Fallback: draw text when no logo present
-                            ctx.font = `${Math.max(10, hexSize * 0.3)}px 'Inter', sans-serif`;
-                            ctx.fillStyle = "rgba(255,255,255,0.85)";
-                            ctx.textAlign = "center";
-                            ctx.textBaseline = "middle";
-                            ctx.fillText(card.title || "Skill", projX, projY);
+                            context.font = `${Math.max(10, hexSize * 0.3)}px 'Inter', sans-serif`;
+                            context.fillStyle = "rgba(255,255,255,0.85)";
+                            context.textAlign = "center";
+                            context.textBaseline = "middle";
+                            context.fillText(card.title || "Skill", projX, projY);
                         }
-                        ctx.restore();
-                        ctx.restore();
+                        context.restore();
+                        context.restore();
                     });
                 }
             }
 
-            // === Render selected card in center with scaling factor ===
-            if (selectedCard) {
-                const largeSize = 60 * scaleFactor; // Use the scale factor here
-                const cx = centerX;
-                const cy = centerY;
-
-                ctx.save();
-                ctx.globalAlpha = 0.95;
-
-                // Enhanced glow for selected card
-                const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, largeSize);
-                gradient.addColorStop(0, "rgba(99, 102, 241, 0.8)");
-                gradient.addColorStop(0.7, "rgba(67, 56, 202, 0.4)");
-                gradient.addColorStop(1, "rgba(67, 56, 202, 0.2)");
-
-                ctx.fillStyle = gradient;
-                ctx.shadowColor = "rgba(99, 102, 241, 0.9)";
-                ctx.shadowBlur = 40;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
-
-                drawRoundedHexPath(ctx, cx, cy, largeSize, 12);
-                ctx.fill();
-
-                // Border for selected card
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
-                ctx.stroke();
-
-                // Inner content (logo + name)
-                ctx.save();
-
-                if (selectedCard.logo) {
-                    const logoImg = new Image();
-                    logoImg.src = selectedCard.logo;
-
-                    const drawLogoAndText = () => {
-                        // Draw logo
-                        ctx.drawImage(
-                            logoImg,
-                            cx - largeSize / 2.5,
-                            cy - largeSize / 2.5,
-                            largeSize / 1.25,
-                            largeSize / 1.25
-                        );
-
-                        // Draw skill name below
-                        ctx.font = `bold 10px 'Inter', sans-serif`;
-                        ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-                        ctx.textAlign = "center";
-                        ctx.textBaseline = "top";
-                        ctx.fillText(selectedCard.title, cx, cy + largeSize * 0.6);
-                    };
-
-                    if (!logoImg.complete) {
-                        logoImg.onload = drawLogoAndText;
-                    } else {
-                        drawLogoAndText();
-                    }
-                } else {
-                    // Fallback: just text
-                    ctx.font = `bold ${Math.max(16, largeSize * 0.2)}px 'Inter', sans-serif`;
-                    ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText(selectedCard.title, cx, cy);
-                }
-
-                ctx.restore();
-                ctx.restore();
-            }
 
             // Vignette effect
-            const g = ctx.createRadialGradient(
+            const g = context.createRadialGradient(
                 centerX,
                 centerY,
                 Math.min(centerX, centerY) * 0.1,
@@ -402,9 +374,9 @@ export default function HexSphereGrid(): JSX.Element {
                 Math.max(centerX, centerY)
             );
             g.addColorStop(0, "rgba(0,0,0,0)");
-            g.addColorStop(1, "rgba(2,6,20,0.6)");
-            ctx.fillStyle = g;
-            ctx.fillRect(0, 0, width, height);
+            g.addColorStop(1, themeRef.current.isDark ? "rgba(2,6,20,0.6)" : "rgba(0,0,0,0.14)");
+            context.fillStyle = g;
+            context.fillRect(0, 0, width, height);
 
             rafRef.current = requestAnimationFrame(render);
         }
@@ -414,7 +386,7 @@ export default function HexSphereGrid(): JSX.Element {
             window.removeEventListener("resize", resize);
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
         };
-    }, [selectedCard, scaleFactor]); // Add dependencies to re-render when selection or scale changes
+    }, [selectedCard]); // re-render when selection changes (canvas drawing removed)
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -497,6 +469,44 @@ export default function HexSphereGrid(): JSX.Element {
 
     return (
         <div className="w-full h-full relative">
+            {/* header with controls */}
+            <div className="absolute top-0 left-0 w-full z-20">
+                <div className="m-3 rounded-xl border border-border/50 bg-background/80 backdrop-blur-md shadow-sm">
+                    <div className="flex flex-col gap-2 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <select
+                                value={filterCategory}
+                                onChange={(e) => setFilterCategory(e.target.value)}
+                                className="h-9 min-w-44 rounded-full border border-accent/50 bg-accent/90 px-3 text-sm text-accent-foreground outline-none shadow-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            >
+                                <option value="">All Categories</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.name} value={cat.name}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm sm:justify-end">
+                            <span className="text-muted-foreground">{filterSummary}</span>
+                            <span className="text-muted-foreground/70">•</span>
+                            <span className="font-medium text-foreground">{visibleCount}</span>
+                            <span className="text-muted-foreground">skills</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* popup appears centered within the grid container */}
+            {selectedCard && (
+                <AcceternityCard
+                    title={selectedCard.title}
+                    logo={selectedCard.logo}
+                    level={selectedCard.level}
+                    description={selectedCard.description}
+                    onClose={() => setSelectedCard(null)}
+                />
+            )}
+
             <canvas
                 ref={canvasRef}
                 style={{

@@ -36,16 +36,28 @@ const certifications = [
 const experience = [
     {
         role: "AI Research Intern",
-        company: "Blubridge",
-        period: "28.05.2025 - 29.06.2025", // 👉 you can edit dates later
+        company: "BluBridge",
+        period: "28.06.2025 - 28.07.2025",
         description:
-            "Worked on implementing an LLM like GPT from scratch. Gained hands-on experience with distributed training (DDP, UDA) and model architecture design. Improved my ability to interpret and apply research papers into working solutions.",
+            "Gained in-depth exposure to Large Language Models (LLMs) covering architecture, tokenization, attention mechanisms, and fine‑tuning strategies. Led development of a custom LLM from dataset preparation through training, evaluation, and deployment while exploring transformer interpretability methods.",
         highlights: [
-            "Implemented GPT-like architecture from scratch",
-            "Worked with Distributed Data Parallel (DDP)",
-            "Enhanced research-to-code documentation workflow",
-            "Hands on experience with writing custom pytorch functions",
-            "Creating custom learning functions to the model"
+            "In‑depth exposure to LLM architecture, tokenization, attention, and fine‑tuning",
+            "Worked with Distributed Data Parallel (DDP) and multi‑GPU training pipelines",
+            "Led development of a custom LLM model from scratch (data, training, eval, deployment)",
+            "Explored transformer interpretability with embedding visualizations and attention heatmaps"
+        ]
+    },
+    {
+        role: "SDE Intern",
+        company: "RocketLane",
+        period: "03.12.2025 - 05.03.2026",
+        description:
+            "Designed and deployed a multi‑language AI transcription pipeline and built backend infrastructure for meeting video playback and transcripts. Improved system reliability, observability, and delivered multiple production features and integrations.",
+        highlights: [
+            "Built multi‑language AI transcription pipeline using WhisperX; containerized and deployed on AWS SageMaker",
+            "Implemented backend for video playback UI, standardized storage, signed URLs, and caption sync",
+            "Stabilized Zoom Meeting SDK recordings, fixed bot lifecycle bugs, added configurable Datadog monitoring",
+            "Delivered GDPR acknowledgement, calendar rescheduling fixes, and MCP server POC for Chargebee integration"
         ]
     }
 ]
