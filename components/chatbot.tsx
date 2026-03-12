@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { MessageCircle, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -9,7 +9,8 @@ import BotAnim from "@/public/animations/Bot-Robot.json"
 import LoadingAnim from "@/public/animations/loading.json"
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
 
-
+const INITIAL_GREETING_QUERY =
+    "Introduce yourself briefly and greet the visitor to this portfolio in one short, friendly paragraph."
 
 export function Chatbot() {
     const [isBotOpen, setIsBotOpen] = useState(false)
@@ -17,19 +18,27 @@ export function Chatbot() {
     const [history, setHistory] = useState<{ query: string; answer: string }[]>([])
     const [currentIndex, setCurrentIndex] = useState(-1)
     const [isLoading, setIsLoading] = useState(false)
+    const initialGreetingSentRef = useRef(false)
 
+    // Send a greeting to the chatbot in the background on first visit; show response when user opens chat
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsBotOpen(true)
-        }, 1000)
-        return () => clearTimeout(timer)
-    }, [])
+        if (initialGreetingSentRef.current) return
+        initialGreetingSentRef.current = true
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsBotOpen(false)
-        }, 6000)
-        return () => clearTimeout(timer)
+        fetch(`${process.env.NEXT_PUBLIC_API_URLIC_API_URL}/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: INITIAL_GREETING_QUERY }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                const answer = data.response || ""
+                if (answer) {
+                    setHistory((prev) => [{ query: "Welcome", answer }, ...prev])
+                    setCurrentIndex(0)
+                }
+            })
+            .catch(() => { /* no popup or toast for background greeting */ })
     }, [])
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
