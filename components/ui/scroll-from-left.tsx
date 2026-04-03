@@ -12,6 +12,14 @@ const ScrollFromLeft: React.FC<ScrollSideProps> = ({
     distance = 150,
 }) => {
     const ref = useRef<HTMLDivElement | null>(null);
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 768);
+        onResize();
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -32,7 +40,7 @@ const ScrollFromLeft: React.FC<ScrollSideProps> = ({
     );
 
     return (
-        <motion.div ref={ref} style={{ x }}>
+        <motion.div ref={ref} style={{ x: isMobile ? 0 : x }}>
             {children}
         </motion.div>
     );

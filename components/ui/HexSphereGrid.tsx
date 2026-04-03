@@ -22,6 +22,7 @@ export default function HexSphereGrid(): JSX.Element {
     const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
     const [filterCategory, setFilterCategory] = useState<string>("");
     const [visibleCount, setVisibleCount] = useState<number>(skills.length);
+    const [isMobile, setIsMobile] = useState(false);
     // previously used for on-canvas selected card; no longer needed
     const drawnCardsRef = useRef<{ data: CardData; projX: number; projY: number; hexSize: number }[]>([]);
     const themeRef = useRef({
@@ -42,6 +43,13 @@ export default function HexSphereGrid(): JSX.Element {
 
     const cardsRef = useRef<CardData[]>([]);
     const gridBoundsRef = useRef({ cols: 0, rows: 0, width: 0, height: 0 });
+
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 768);
+        onResize();
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
 
     useEffect(() => {
         // apply category filter; empty = all categories
@@ -85,7 +93,7 @@ export default function HexSphereGrid(): JSX.Element {
         cardsRef.current = cards;
 
         // Calculate grid bounds
-        const baseSize = 60;
+        const baseSize = isMobile ? 36 : 64;
         const hexWidth = baseSize * Math.sqrt(3);
         const hexHeight = baseSize * 1.5;
 
@@ -95,7 +103,7 @@ export default function HexSphereGrid(): JSX.Element {
             width: cols * hexWidth + hexWidth / 2,
             height: rows * hexHeight
         };
-    }, [filterCategory]);
+    }, [filterCategory, isMobile]);
 
     const filterSummary = useMemo(() => {
         return filterCategory ? `Category: ${filterCategory}` : "Category: All";
@@ -226,7 +234,7 @@ export default function HexSphereGrid(): JSX.Element {
             const centerY = height / 2;
 
             const { offsetX, offsetY, scale } = stateRef.current;
-            const baseSize = 60 * scale;
+            const baseSize = (isMobile ? 36 : 64) * scale;
             const cards = cardsRef.current;
 
             if (cards.length === 0) return;
@@ -386,7 +394,7 @@ export default function HexSphereGrid(): JSX.Element {
             window.removeEventListener("resize", resize);
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
         };
-    }, [selectedCard]); // re-render when selection changes (canvas drawing removed)
+    }, [selectedCard, isMobile]); // re-render when selection or mobile state changes (canvas drawing removed)
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -470,7 +478,7 @@ export default function HexSphereGrid(): JSX.Element {
     return (
         <div className="w-full h-full relative">
             {/* header with controls */}
-            <div className="absolute top-0 left-0 w-full z-20">
+            <div className="absolute top-0 left-0 w-full z-20 hidden md:block">
                 <div className="m-3 rounded-xl border border-border/50 bg-background/80 backdrop-blur-md shadow-sm">
                     <div className="flex flex-col gap-2 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex flex-wrap items-center gap-3">

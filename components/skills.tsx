@@ -6,8 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users } from "lucide-react"
 import { CardHoverWrapper } from "./ui/card-hover-wrapper"
 import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
-import ScrollFromLeft from "./ui/scroll-from-left"
-import ScrollFromRight from "./ui/scroll-from-right"
 
 export function Skills() {
     return (
@@ -18,44 +16,45 @@ export function Skills() {
                         Skills & Expertise
                     </h2>
                 </ScrollFadeInAndOut>
-                <div className="grid lg:grid-cols-4 gap-8">
+                <div className="space-y-8">
                     {/* Interactive Skills Visualization */}
-                    <div className="lg:col-span-3 h-full rounded-xl overflow-hidden border border-border/50">
+                    <div className="h-[430px] sm:h-[520px] lg:h-[620px] rounded-xl overflow-hidden border border-border/50">
                         <HexSphereGrid />
                     </div>
-                    {/* Soft Skills Sidebar */}
-                    <ScrollFromRight>
-                        <div className="space-y-6">
-                            <CardHoverWrapper>
-                                <Card className="py-6">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Users className="h-5 w-5" />
-                                            Soft Skills
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="space-y-4">
-                                            {softSkills.map((skill, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-                                                >
-                                                    <span className="text-xl">{skill.icon}</span>
-                                                    <div>
-                                                        <h4 className="font-medium">{skill.name}</h4>
-                                                        <p className="text-sm text-muted-foreground">
-                                                            {skill.description}
-                                                        </p>
-                                                    </div>
+
+                    {/* Soft Skills Row (moved below hex grid) */}
+                    <ScrollFadeInAndOut>
+                        <CardHoverWrapper>
+                            <Card className="py-6">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Users className="h-5 w-5" />
+                                        Soft Skills
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                        {softSkills.map((skill, index) => (
+                                            <div
+                                                key={index}
+                                                className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                                            >
+                                                <span className="text-xl">
+                                                    {skill.icon}
+                                                </span>
+                                                <div>
+                                                    <h4 className="font-medium">{skill.name}</h4>
+                                                    <p className="text-sm text-muted-foreground">
+                                                        {skill.description}
+                                                    </p>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </CardHoverWrapper>
-                        </div>
-                    </ScrollFromRight>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </CardHoverWrapper>
+                    </ScrollFadeInAndOut>
                 </div>
             </div>
         </section>

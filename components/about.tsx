@@ -10,7 +10,7 @@ import ScrollFromRight from "./ui/scroll-from-right"
 
 export function About() {
     return (
-        <section id="about" className="py-20">
+        <section id="about" className="py-20 pt-28 md:pt-20 relative z-20">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     <ScrollFadeInAndOut>
