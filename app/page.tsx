@@ -13,7 +13,7 @@ export default function Home() {
         <div className="min-h-screen relative w-full overflow-hidden">
             <div className="relative z-10 overflow-hidden">
                 <Header />
-                <main >
+                <main className="text-[97%] md:text-[100%]">
                     <Hero />
                     <About />
                     <ProjectsSlideshow />
@@ -24,7 +24,7 @@ export default function Home() {
                 <Footer />
             </div>
 
-            <div className="fixed bottom-4 right-4 z-50 pointer-events-auto">
+            <div className="fixed bottom-0 right-0  z-50 pointer-events-auto">
                 <Chatbot />
             </div>
         </div>

@@ -19,13 +19,13 @@ export function Hero() {
     }
     return (
         <div
-            className="h-screen relative w-full">
+            className="relative w-full h-auto md:h-screen">
             <div className="absolute inset-0 z-0" >
                 <Boxes />
             </div>
             <div className="relative z-10 pointer-events-none">
 
-                <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 ">
+                <section className="min-h-svh md:min-h-screen flex items-center justify-center relative overflow-hidden pt-28 md:pt-20 pb-8 md:pb-0">
 
                     {/* Hero Content */}
                     <ScrollFade>

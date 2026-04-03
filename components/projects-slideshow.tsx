@@ -205,7 +205,7 @@ export function ProjectsSlideshow() {
 
 
                     <div className="relative mb-8">
-                        <div className="relative h-[500px] md:h-[600px] overflow-hidden rounded-2xl shadow-2xl">
+                        <div className="relative h-[560px] md:h-[600px] overflow-hidden rounded-2xl shadow-2xl">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={currentIndex}
@@ -268,49 +268,67 @@ export function ProjectsSlideshow() {
                                                             Code
                                                         </Button>
                                                     </div>
+
+                                                    {/* Mobile-only next/prev controls placed under Code button */}
+                                                    <div className="mt-5 flex items-center justify-between gap-2 md:hidden">
+                                                        <Button
+                                                            variant="secondary"
+                                                            size="icon"
+                                                            onClick={prevSlide}
+                                                            className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                                        >
+                                                            <ChevronLeft className="h-5 w-5 " />
+                                                        </Button>
+                                                        <Button
+                                                            variant="secondary"
+                                                            size="icon"
+                                                            onClick={nextSlide}
+                                                            className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
+                                                        >
+                                                            <ChevronRight className="h-5 w-5" />
+                                                        </Button>
+                                                    </div>
                                                 </motion.div>
                                             </CardContent>
                                         </div>
                                     </Card>
+
+                                    {/* Navigation Controls (inside slide so fade/move matches card) */}
+                                    <div className="hidden md:block absolute bottom-24 left-3 md:top-1/2 md:-translate-y-1/2 md:left-4 z-10">
+                                        <Button
+                                            variant="secondary"
+                                            size="icon"
+                                            onClick={prevSlide}
+                                            className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
+                                        >
+                                            <ChevronLeft className="h-5 w-5 " />
+                                        </Button>
+                                    </div>
+                                    <div className="hidden md:block absolute bottom-24 right-3 md:top-1/2 md:-translate-y-1/2 md:right-4 z-10">
+                                        <Button
+                                            variant="secondary"
+                                            size="icon"
+                                            onClick={nextSlide}
+                                            className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
+                                        >
+                                            <ChevronRight className="h-5 w-5" />
+                                        </Button>
+                                    </div>
+
+                                    {/* Play/Pause Control */}
+                                    <div className="absolute top-4 left-4 md:top-auto md:bottom-4 z-10">
+                                        <Button
+                                            variant="secondary"
+                                            size="icon"
+                                            onClick={() => setIsPlaying(!isPlaying)}
+                                            className="bg-accent/80 dark:bg-accent/80 backdrop-blur-sm hover:bg-accent/90 shadow-lg"
+                                        >
+                                            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                                        </Button>
+                                    </div>
                                 </motion.div>
                             </AnimatePresence>
                         </div>
-
-                        {/* Navigation Controls */}
-                        <ScrollFadeInAndOut>
-                            <div className="absolute top-1/2 -translate-y-1/2 left-4 z-10">
-                                <Button
-                                    variant="secondary"
-                                    size="icon"
-                                    onClick={prevSlide}
-                                    className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg"
-                                >
-                                    <ChevronLeft className="h-5 w-5 " />
-                                </Button>
-                            </div>
-                            <div className="absolute top-1/2 -translate-y-1/2 right-4 z-10">
-                                <Button
-                                    variant="secondary"
-                                    size="icon"
-                                    onClick={nextSlide}
-                                    className="bg-black/80 dark:bg-background/80 backdrop-blur-sm hover:bg-background/90 shadow-lg "
-                                >
-                                    <ChevronRight className="h-5 w-5" />
-                                </Button>
-                            </div>
-
-                            {/* Play/Pause Control */}
-                            <div className="absolute bottom-4 left-4 z-10">
-                                <Button
-                                    variant="secondary"
-                                    size="icon"
-                                    onClick={() => setIsPlaying(!isPlaying)}
-                                    className="bg-accent/80 dark:bg-accent/80 backdrop-blur-sm hover:bg-accent/90 shadow-lg"
-                                >
-                                    {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                                </Button>
-                            </div>
-                        </ScrollFadeInAndOut>
                     </div>
 
                 </div>

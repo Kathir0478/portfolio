@@ -1,4 +1,4 @@
-import { Brain, Code, Database, Globe, Wrench, Puzzle, MessageSquare, ClipboardList, RefreshCw, Crown, Users } from "lucide-react"
+import { Brain, Code, Database, Globe, Wrench, Puzzle, MessageSquare, ClipboardList, RefreshCw, Crown, Users, Clock3 } from "lucide-react"
 import { ReactNode } from "react"
 
 export interface Skill {
@@ -291,6 +291,11 @@ export const softSkills: SoftSkill[] = [
         name: "Leadership",
         icon: <Crown className="text-purple-600" />,
         description: "Mentoring junior developers, leading technical initiatives"
+    },
+    {
+        name: "Availability",
+        icon: <Clock3 className="text-purple-500" />,
+        description: "Reliable and responsive collaboration with consistent availability across project timelines"
     }
 ]
 
