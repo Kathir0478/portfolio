@@ -24,7 +24,7 @@ export default function Home() {
                 <Footer />
             </div>
 
-            <div className="fixed bottom-0 right-0  z-50 pointer-events-auto">
+            <div className="fixed bottom-4 right-4  z-50 pointer-events-auto">
                 <Chatbot />
             </div>
         </div>
