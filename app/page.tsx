@@ -6,7 +6,6 @@ import { Education } from "@/components/education"
 import { Skills } from "@/components/skills"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
-import { Chatbot } from "@/components/chatbot"
 
 export default function Home() {
     return (
@@ -24,9 +23,6 @@ export default function Home() {
                 <Footer />
             </div>
 
-            <div className="fixed bottom-4 right-4  z-50 pointer-events-auto">
-                <Chatbot />
-            </div>
         </div>
     );
 }
