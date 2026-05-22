@@ -12,8 +12,6 @@ import { Mail, Phone, MapPin, Send } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 import { CardHoverWrapper } from "./ui/card-hover-wrapper"
 import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
-import ScrollFromLeft from "./ui/scroll-from-left"
-import ScrollFromRight from "./ui/scroll-from-right"
 
 export function Contact() {
     const { toast } = useToast()
@@ -33,15 +31,15 @@ export function Contact() {
 
         try {
             const result = await emailjs.send(
-                "service_09a1mur",
-                "template_3j31avt",
+                "service_e8utd03",
+                "template_trli4to",
                 {
                     from_name: formData.name,
                     from_email: formData.email,
                     subject: formData.subject,
                     message: formData.message,
                 },
-                "yGcfX1PbfjqRMJdPW"
+                "Uo2VfF451_wnVutjb"
             )
             console.log("SUCCESS!", result.text)
             setIsSuccess(true)
@@ -83,7 +81,7 @@ export function Contact() {
                     </ScrollFadeInAndOut>
                     <div className="grid lg:grid-cols-2 gap-12">
                         {/* Contact Information */}
-                        <ScrollFromLeft>
+                        <ScrollFadeInAndOut>
                             <div>
                                 <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
                                 <p className="text-lg text-muted-foreground mb-8 text-pretty">
@@ -98,7 +96,7 @@ export function Contact() {
                                             </div>
                                             <div>
                                                 <h4 className="font-medium">Email</h4>
-                                                <p className="text-muted-foreground">kathir200420@gmail.com</p>
+                                                <p className="text-muted-foreground">kathiravan0478@gmail.com</p>
                                             </div>
                                         </div>
 
@@ -124,9 +122,9 @@ export function Contact() {
                                     </div>
                                 </CardHoverWrapper>
                             </div>
-                        </ScrollFromLeft>
+                        </ScrollFadeInAndOut>
                         {/* Contact Form */}
-                        <ScrollFromRight>
+                        <ScrollFadeInAndOut>
                             <div>
                                 <CardHoverWrapper>
                                     <Card className="py-6">
@@ -185,7 +183,7 @@ export function Contact() {
                                     </Card>
                                 </CardHoverWrapper>
                             </div>
-                        </ScrollFromRight>
+                        </ScrollFadeInAndOut>
                     </div>
                 </div>
             </div>

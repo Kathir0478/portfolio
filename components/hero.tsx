@@ -127,7 +127,7 @@ export function Hero() {
                                         <Linkedin className="h-7 w-7" />
                                     </a>
                                     <a
-                                        href="mailto:kathir200420@gmail.com"
+                                        href="mailto:kathiravan0478@gmail.com"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="pointer-events-auto z-50 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-125 hover:-translate-y-1"

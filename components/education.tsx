@@ -5,8 +5,6 @@ import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Award, Calendar, Briefcase, Car } from "lucide-react"
 import { CardHoverWrapper } from "./ui/card-hover-wrapper"
 import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
-import ScrollFromLeft from "./ui/scroll-from-left"
-import ScrollFromRight from "./ui/scroll-from-right"
 
 const education = [
     {
@@ -72,7 +70,7 @@ export function Education() {
                     </ScrollFadeInAndOut>
                     <div className="grid lg:grid-cols-2 gap-8">
                         {/* Education */}
-                        <ScrollFromLeft>
+                        <ScrollFadeInAndOut>
                             <div>
                                 <h3 className="text-2xl font-semibold mb-6 flex items-center">
                                     <GraduationCap className="h-6 w-6 mr-2 text-accent" />
@@ -109,8 +107,8 @@ export function Education() {
                                     ))}
                                 </div>
                             </div>
-                        </ScrollFromLeft>
-                        <ScrollFromRight>
+                        </ScrollFadeInAndOut>
+                        <ScrollFadeInAndOut>
                             <div>
                                 <h3 className="text-2xl font-semibold mb-6 flex items-center">
                                     <Award className="h-6 w-6 mr-2 text-accent" />
@@ -158,7 +156,7 @@ export function Education() {
                                     </Card>
                                 </CardHoverWrapper>
                             </div>
-                        </ScrollFromRight>
+                        </ScrollFadeInAndOut>
                     </div>
 
                     <ScrollFadeInAndOut>

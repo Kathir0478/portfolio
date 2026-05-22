@@ -5,8 +5,6 @@ import { Code, Users, Award, Coffee } from "lucide-react"
 import Lottie from "lottie-react"
 import AboutAnimation from "@/public/animations/About-Avatar.json"
 import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
-import ScrollFromLeft from "./ui/scroll-from-left"
-import ScrollFromRight from "./ui/scroll-from-right"
 
 export function About() {
     return (
@@ -24,7 +22,7 @@ export function About() {
                         </div>
                     </ScrollFadeInAndOut>
                     <div className="grid md:grid-cols-2 gap-16 items-center mb-16">
-                        <ScrollFromLeft>
+                        <ScrollFadeInAndOut>
                             <div className="relative flex justify-center">
                                 <div className="w-full max-w-md">
                                     <Lottie
@@ -34,8 +32,8 @@ export function About() {
                                     />
                                 </div>
                             </div>
-                        </ScrollFromLeft>
-                        <ScrollFromRight>
+                        </ScrollFadeInAndOut>
+                        <ScrollFadeInAndOut>
                             <div className="space-y-6">
                                 <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
                                     I'm a dedicated student with a passion for problem-solving and creating meaningful
@@ -66,7 +64,7 @@ export function About() {
                                     </div>
                                 </div>
                             </div>
-                        </ScrollFromRight>
+                        </ScrollFadeInAndOut>
                     </div>
                     <ScrollFadeInAndOut>
                         <div className="grid md:grid-cols-4 gap-6">

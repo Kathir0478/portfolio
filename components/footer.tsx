@@ -44,7 +44,7 @@ export function Footer() {
                                     {[
                                         { icon: <Github className="h-5 w-5" />, href: "https://github.com/Kathir0478" },
                                         { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/in/kathiravan-b-980b00313/" },
-                                        { icon: <Mail className="h-5 w-5" />, href: "mailto:kathir200420@gmail.com" },
+                                        { icon: <Mail className="h-5 w-5" />, href: "mailto:kathiravan0478@gmail.com" },
                                     ].map((item, idx) => (
                                         <a
                                             key={idx}
