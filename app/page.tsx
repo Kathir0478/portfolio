@@ -6,6 +6,8 @@ import { Education } from "@/components/education"
 import { Skills } from "@/components/skills"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
+import { Chatbot } from "@/components/chatbot"
+
 export default function Home() {
     return (
         <div className="min-h-screen relative w-full overflow-hidden">
