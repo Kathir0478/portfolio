@@ -1,74 +1,103 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useMemo, useState } from "react"
+import { useTheme } from "next-themes"
+import { AnimatePresence } from "framer-motion"
+import CardNav, { type CardNavItem } from "@/components/ui/CardNav"
+import { ChatbotTrigger, ChatbotPanel, useChatbot } from "@/components/chatbot"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Menu, X } from "lucide-react"
-import { motion } from "framer-motion"
 
 export function Header() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const { resolvedTheme } = useTheme()
+    const chat = useChatbot()
+    const isDark = resolvedTheme === "dark"
+    const [isNavOpen, setIsNavOpen] = useState(false)
+    const [navVisible, setNavVisible] = useState(false)
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => setNavVisible(true), 650)
+        return () => window.clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        if (chat.isOpen) {
+            setIsNavOpen(false)
+        }
+    }, [chat.isOpen])
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId)
         if (element) element.scrollIntoView({ behavior: "smooth" })
-        setIsMenuOpen(false)
     }
 
+    const navItems: CardNavItem[] = useMemo(
+        () => [
+            {
+                label: "About",
+                bgColor: isDark ? "#1B1722" : "#2a2438",
+                textColor: "#fff",
+                links: [
+                    { label: "About Me", ariaLabel: "Go to About section", onClick: () => scrollToSection("about") },
+                    { label: "Education", ariaLabel: "Go to Education section", onClick: () => scrollToSection("education") },
+                ],
+            },
+            {
+                label: "Work",
+                bgColor: isDark ? "#2F293A" : "#3d3550",
+                textColor: "#fff",
+                links: [
+                    { label: "Projects", ariaLabel: "Go to Projects section", onClick: () => scrollToSection("projects") },
+                    { label: "Skills", ariaLabel: "Go to Skills section", onClick: () => scrollToSection("skills") },
+                ],
+            },
+            {
+                label: "Contact",
+                bgColor: isDark ? "#2F293A" : "#4a4060",
+                textColor: "#fff",
+                links: [
+                    { label: "Get in Touch", ariaLabel: "Go to Contact section", onClick: () => scrollToSection("contact") },
+                ],
+            },
+        ],
+        [isDark]
+    )
+
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-sm">
-            <motion.div
-                initial={{ y: -50, opacity: 1 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="container mx-auto px-4 py-4"
-            >
-                <div className="flex items-center justify-between">
-                    <div className="text-xl font-bold text-foreground hover:text-accent transition-colors duration-200">
-                        Kathiravan
-                    </div>
-
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-6">
-                        {["about", "projects", "education", "skills", "contact"].map((item) => (
-                            <button
-                                key={item}
-                                onClick={() => scrollToSection(item)}
-                                className="text-muted-foreground hover:text-accent transition-all duration-200 capitalize font-medium hover:scale-105"
-                            >
-                                {item}
-                            </button>
-                        ))}
+        <>
+            <div className="h-[4rem] shrink-0" aria-hidden />
+            <CardNav
+                className={navVisible ? "nav-visible" : "nav-hidden"}
+                logoText="KATHIRAVAN"
+                onLogoClick={() => scrollToSection("about")}
+                items={navItems}
+                baseColor="var(--background)"
+                menuColor="var(--foreground)"
+                isExpanded={isNavOpen}
+                onExpandedChange={setIsNavOpen}
+                ctaContent={
+                    <ChatbotTrigger
+                        isOpen={chat.isOpen}
+                        onToggle={() => chat.setIsOpen(!chat.isOpen)}
+                        variant="header"
+                    />
+                }
+                isChatOpen={chat.isOpen}
+                topActions={
+                    <div className="scale-90 [&_button]:h-9 [&_button]:w-9">
                         <ThemeToggle />
-                    </nav>
-
-                    {/* Mobile Menu Controls */}
-                    <div className="md:hidden flex items-center space-x-2">
-                        <ThemeToggle />
-                        <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                        </Button>
                     </div>
-                </div>
-
-                {/* Mobile Navigation */}
-                {isMenuOpen && (
-                    <nav className="md:hidden mt-4 pb-4 border-t border-border/50 pt-4">
-                        <div className="flex flex-col space-y-4">
-                            {["about", "projects", "education", "skills", "contact"].map((item) => (
-                                <button
-                                    key={item}
-                                    onClick={() => scrollToSection(item)}
-                                    className="text-left text-muted-foreground hover:text-accent transition-colors capitalize font-medium"
-                                >
-                                    {item}
-                                </button>
-                            ))}
-                        </div>
-                    </nav>
+                }
+            />
+            <AnimatePresence>
+                {chat.isOpen && (
+                    <ChatbotPanel
+                        {...chat}
+                        isOpen={chat.isOpen}
+                        placement="floating"
+                        onClose={() => chat.setIsOpen(false)}
+                    />
                 )}
-
-            </motion.div>
-        </header>
+            </AnimatePresence>
+        </>
     )
 }

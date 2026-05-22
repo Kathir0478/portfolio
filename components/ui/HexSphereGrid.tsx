@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
 import { skills, Skill, categories } from "@/data/skills";
-import AcceternityCard from "./AcceternityCard"; // custom overlay for selected skill
+import SkillTiltedCardOverlay from "./SkillTiltedCardOverlay";
 
 
 interface CardData {
@@ -22,9 +22,14 @@ export default function HexSphereGrid(): JSX.Element {
     const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
     const [filterCategory, setFilterCategory] = useState<string>("");
     const [visibleCount, setVisibleCount] = useState<number>(skills.length);
-    const [isMobile, setIsMobile] = useState(false);
+    const getIsMobile = () =>
+        typeof window !== "undefined" && window.innerWidth < 768;
+
+    const [isMobile, setIsMobile] = useState(getIsMobile);
     // previously used for on-canvas selected card; no longer needed
     const drawnCardsRef = useRef<{ data: CardData; projX: number; projY: number; hexSize: number }[]>([]);
+    const pointerRef = useRef({ startX: 0, startY: 0, moved: false });
+    const DRAG_THRESHOLD = 8;
     const themeRef = useRef({
         background: "#0b1220",
         border: "rgba(139, 92, 246, 0.22)",
@@ -45,7 +50,7 @@ export default function HexSphereGrid(): JSX.Element {
     const gridBoundsRef = useRef({ cols: 0, rows: 0, width: 0, height: 0 });
 
     useEffect(() => {
-        const onResize = () => setIsMobile(window.innerWidth < 768);
+        const onResize = () => setIsMobile(getIsMobile());
         onResize();
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
@@ -92,8 +97,8 @@ export default function HexSphereGrid(): JSX.Element {
 
         cardsRef.current = cards;
 
-        // Calculate grid bounds
-        const baseSize = isMobile ? 36 : 64;
+        // Calculate grid bounds (read viewport directly so first mobile paint is correct)
+        const baseSize = getIsMobile() ? 36 : 64;
         const hexWidth = baseSize * Math.sqrt(3);
         const hexHeight = baseSize * 1.5;
 
@@ -234,7 +239,7 @@ export default function HexSphereGrid(): JSX.Element {
             const centerY = height / 2;
 
             const { offsetX, offsetY, scale } = stateRef.current;
-            const baseSize = (isMobile ? 36 : 64) * scale;
+            const baseSize = (getIsMobile() ? 36 : 64) * scale;
             const cards = cardsRef.current;
 
             if (cards.length === 0) return;
@@ -405,12 +410,26 @@ export default function HexSphereGrid(): JSX.Element {
             return { x: e.clientX - rect.left, y: e.clientY - rect.top };
         };
 
+        const trySelectCardAt = (x: number, y: number) => {
+            for (const card of drawnCardsRef.current) {
+                const dx = x - card.projX;
+                const dy = y - card.projY;
+                const dist = Math.hypot(dx, dy);
+                if (dist < card.hexSize * 0.9) {
+                    setSelectedCard(card.data);
+                    return;
+                }
+            }
+            setSelectedCard(null);
+        };
+
         const onPointerDown = (e: PointerEvent) => {
             const p = toCanvasCoords(e);
             const state = stateRef.current;
             state.pointerDown = true;
             state.lastPx = p.x;
             state.lastPy = p.y;
+            pointerRef.current = { startX: p.x, startY: p.y, moved: false };
 
             try {
                 canvas.setPointerCapture(e.pointerId);
@@ -424,6 +443,13 @@ export default function HexSphereGrid(): JSX.Element {
             const p = toCanvasCoords(e);
             const state = stateRef.current;
             if (!state.pointerDown) return;
+
+            const totalDx = p.x - pointerRef.current.startX;
+            const totalDy = p.y - pointerRef.current.startY;
+            if (Math.hypot(totalDx, totalDy) > DRAG_THRESHOLD) {
+                pointerRef.current.moved = true;
+            }
+
             const dx = p.x - state.lastPx;
             const dy = p.y - state.lastPy;
             state.lastPx = p.x;
@@ -435,43 +461,33 @@ export default function HexSphereGrid(): JSX.Element {
         };
 
         const onPointerUp = (e: PointerEvent) => {
+            const p = toCanvasCoords(e);
             const state = stateRef.current;
             state.pointerDown = false;
-            canvas.releasePointerCapture(e.pointerId);
-            setIsPanning(false);
-        };
 
-        const handleClick = (e: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-
-            for (const card of drawnCardsRef.current) {
-                const dx = mouseX - card.projX;
-                const dy = mouseY - card.projY;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < card.hexSize * 0.9) {
-                    setSelectedCard(card.data);
-                    return;
-                }
+            try {
+                canvas.releasePointerCapture(e.pointerId);
+            } catch {
+                /* ignore */
             }
+            setIsPanning(false);
 
-            // If clicked empty space, deselect
-            setSelectedCard(null);
+            // Only open/maximize a card on tap, not after drag/pan
+            if (!pointerRef.current.moved) {
+                trySelectCardAt(p.x, p.y);
+            }
         };
 
         canvas.addEventListener("pointerdown", onPointerDown);
         canvas.addEventListener("pointermove", onPointerMove);
         canvas.addEventListener("pointerup", onPointerUp);
         canvas.addEventListener("pointercancel", onPointerUp);
-        canvas.addEventListener("click", handleClick);
 
         return () => {
             canvas.removeEventListener("pointerdown", onPointerDown);
             canvas.removeEventListener("pointermove", onPointerMove);
             canvas.removeEventListener("pointerup", onPointerUp);
             canvas.removeEventListener("pointercancel", onPointerUp);
-            canvas.removeEventListener("click", handleClick);
         };
     }, [isPanning]);
 
@@ -485,7 +501,7 @@ export default function HexSphereGrid(): JSX.Element {
                             <select
                                 value={filterCategory}
                                 onChange={(e) => setFilterCategory(e.target.value)}
-                                className="h-9 min-w-44 rounded-full border border-accent/50 bg-accent/90 px-3 text-sm text-accent-foreground outline-none shadow-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                                className="h-9 min-w-44 rounded-xl border border-accent/50 bg-accent/90 px-3 text-sm text-accent-foreground outline-none shadow-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                             >
                                 <option value="">All Categories</option>
                                 {categories.map((cat) => (
@@ -506,7 +522,7 @@ export default function HexSphereGrid(): JSX.Element {
             </div>
             {/* popup appears centered within the grid container */}
             {selectedCard && (
-                <AcceternityCard
+                <SkillTiltedCardOverlay
                     title={selectedCard.title}
                     logo={selectedCard.logo}
                     level={selectedCard.level}
