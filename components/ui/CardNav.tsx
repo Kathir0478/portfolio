@@ -193,7 +193,7 @@ export default function CardNav({
         const originalBodyOverflow = document.body.style.overflow
         const originalHtmlOverflow = document.documentElement.style.overflow
 
-        if (expanded || isChatOpen) {
+        if (expanded) {
             document.body.style.overflow = "hidden"
             document.documentElement.style.overflow = "hidden"
         } else {
@@ -205,7 +205,7 @@ export default function CardNav({
             document.body.style.overflow = originalBodyOverflow
             document.documentElement.style.overflow = originalHtmlOverflow
         }
-    }, [expanded, isChatOpen])
+    }, [expanded])
 
     useEffect(() => {
         if (isControlled) {
