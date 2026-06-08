@@ -207,7 +207,7 @@ export function ProjectsSlideshow() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             transition={{ duration: 0.3 }}
-                            className="bg-card rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                            className="bg-card rounded-2xl shadow-2xl max-w-4xl w-full max-h-[78vh] overflow-y-auto"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="relative">
