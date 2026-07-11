@@ -1,12 +1,25 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import React, { useCallback, useMemo, useState } from "react"
 import { Code, Users, Award, Coffee } from "lucide-react"
 import Lottie from "lottie-react"
-import AboutAnimation from "@/public/animations/About-Avatar.json"
+import GrowthAnimation from "@/public/animations/about.json"
+import BusinessGrowthAnimation from "@/public/animations/Bussiness Growth.json"
+import PersonThinking from "@/public/animations/Person Thinking.json"
 import ScrollFadeInAndOut from "./ui/scroll-fade-in-out"
 
 export function About() {
+    const animations = useMemo(
+        () => [PersonThinking, GrowthAnimation, BusinessGrowthAnimation],
+        []
+    )
+    const [currentIndex, setCurrentIndex] = useState(0)
+
+    const handleComplete = useCallback(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % animations.length)
+    }, [animations.length])
+
     return (
         <section id="about" className="py-20 pt-28 md:pt-20 relative z-20">
             <div className="container mx-auto px-4">
@@ -25,11 +38,24 @@ export function About() {
                         <ScrollFadeInAndOut>
                             <div className="relative flex justify-center">
                                 <div className="w-full max-w-md">
-                                    <Lottie
-                                        animationData={AboutAnimation}
-                                        loop
-                                        className="w-full h-auto"
-                                    />
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={currentIndex}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 0.5 }}
+                                            className="w-full h-auto"
+                                        >
+                                            <Lottie
+                                                animationData={animations[currentIndex]}
+                                                loop={false}
+                                                onComplete={handleComplete}
+                                                // rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
+                                                className="w-full h-auto"
+                                            />
+                                        </motion.div>
+                                    </AnimatePresence>
                                 </div>
                             </div>
                         </ScrollFadeInAndOut>
