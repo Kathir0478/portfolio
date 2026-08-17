@@ -173,5 +173,26 @@ export const projects: Project[] = [
         ],
         challenges: "Balancing personalization, email generation speed, and simple local setup without relying on expensive infrastructure",
         outcome: "Reduced manual cold emailing effort and enabled scalable personalized outreach",
+    },
+    {
+        id: 9,
+        title: "FluidFlow",
+        description:
+            "A feature-rich RAG platform featuring hybrid search, advanced reranking, and an ultra-modern UI.",
+        detailedDescription:
+            "FluidFlow is an intelligent Retrieval-Augmented Generation (RAG) platform designed to deliver high-precision context retrieval with a sleek UI. Built using a hybrid search strategy that pairs vector embeddings with sparse keyword matching in Qdrant, it utilizes fine-tuned cross-encoder reranking to ensure top-tier context relevance. The user experience is elevated with modern UI components powered by Aceternity UI and React Bits.",
+        image: "/projects/fluidflow.jpg",
+        technologies: ["Next.js","React","Tailwind CSS","Aceternity UI","Qdrant","FastAPI","Python"],
+        github: "https://github.com/Kathir0478/fluidflow",
+        features: [
+            "Hybrid search engine",
+            "Qdrant vector database integration",
+            "Cross-encoder result reranking for higher context precision",
+            "Polished UI built with Aceternity UI and React Bits",
+            "Real-time streaming AI response generation",
+            "Interactive document and prompt context manager"
+        ],
+        challenges: "Seamlessly orchestrating multi-stage retrieval pipelines (dense/sparse hybrid lookup and reranking) while maintaining low latency and keeping the frontend animations fluid.",
+        outcome: "Delivered an aesthetically compelling RAG application that combines high retrieval accuracy with an engaging user experience."
     }
 ];
