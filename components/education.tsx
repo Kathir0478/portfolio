@@ -57,6 +57,19 @@ const experience = [
             "Stabilized Zoom Meeting SDK recordings, fixed bot lifecycle bugs, added configurable Datadog monitoring",
             "Delivered GDPR acknowledgement, calendar rescheduling fixes, and MCP server POC for Chargebee integration"
         ]
+    },
+    {
+        role: "Freelance Full-Stack Engineer",
+        company: "Self-Employed",
+        period: "01.07.2026 - 19.08.2026",
+        description:
+            "Designed and delivered production-grade web applications and automated system architectures for client projects, including an end-to-end gym management ecosystem and scalable components for a confidential enterprise project.",
+        highlights: [
+            "Architected an internal platform and customer-facing web app for LUXE gym using Next.js, FastAPI, and MongoDB Atlas",
+            "Built custom JWT authentication with role-based access control (RBAC) across client, trainer, and admin control panels",
+            "Engineered an automated transactional notification pipeline integrating Brevo Email API and cron-job.org workers",
+            "Developed secure, modular backend APIs and frontend features for a confidential client project under strict NDA constraints"
+        ]
     }
 ]
 
